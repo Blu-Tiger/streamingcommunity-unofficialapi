@@ -27,9 +27,9 @@ pip install streamingcommunity-unofficialapi
 
 Per iniziare bisona impostare il dominio di StreamingCommunity che si desidera utilizzare.
 ```
-from scuapi import SCAPI
+from scuapi import API
 
-sc = SCAPI('StreamingCommunity.esempio')
+sc = API('StreamingCommunity.esempio')
 
 ```
 
@@ -37,9 +37,9 @@ sc = SCAPI('StreamingCommunity.esempio')
 Per ricercare un Film o una Serie per nome nel sito di StreamingCommunity è possibile usare la funzione search().
 
 ```
-from scuapi import SCAPI
+from scuapi import API
 
-sc = SCAPI('StreamingCommunity.esempio')
+sc = API('StreamingCommunity.esempio')
 sc.search('John Wick')
 
 ```
@@ -111,9 +111,9 @@ La funzione restituirà un dizionario contentente per chiave il nome del Film o 
 Per ottenere informazioni su un Film o una Serie è possibile usare la funzione load().
 
 ```
-from scuapi import SCAPI
+from scuapi import API
 
-sc = SCAPI('StreamingCommunity.esempio')
+sc = API('StreamingCommunity.esempio')
 sc.load('https://StreamingCommunity.esempio/titles/6203-john-wick-4')
 ```
 
