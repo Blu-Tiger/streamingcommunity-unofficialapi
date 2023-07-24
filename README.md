@@ -1,6 +1,14 @@
 A simple unofficial api for the italian StreamingCommunity website.
 
 
+![PyPI](https://img.shields.io/pypi/v/streamingcommunity-unofficialapi)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Blu-Tiger/streamingcommunity-unofficialapi)
+[![Publish to PyPI](https://github.com/BluTiger0/streamingcommunity-unofficialapi/workflows/Publish%20to%20PyPI/badge.svg)](https://pypi.org/project/streamingcommunity-unofficialapi/)
+
+![PyPI - Downloads](https://img.shields.io/pypi/dd/streamingcommunity-unofficialapi)
+![PyPI - Downloads](https://img.shields.io/pypi/dw/streamingcommunity-unofficialapi)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/streamingcommunity-unofficialapi)
+
 
 # StreamingCommunity-API
 
