@@ -7,7 +7,7 @@ where=["sc_uapi"]
 
 [project]
 name = "streamingcommunity-unofficialapi"
-version = "0.0.3"
+version = "0.1"
 authors = [
   { name="Beqir Stafa", email="beqirstafa@gmail.com" },
 ]
