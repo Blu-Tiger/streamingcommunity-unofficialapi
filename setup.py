@@ -17,7 +17,6 @@ setup(
     install_requires=[
         "setuptools>=61.0",
         "bs4",
-        "time",
         "hashlib",
         "base64",
         "json",
