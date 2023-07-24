@@ -2,11 +2,8 @@
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
-[options]
-packages = find:
-
-[options.packages.find]
-where=sc_uapi
+[tool.setuptools.packages.find]
+where=["sc_uapi"]
 
 [project]
 name = "streamingcommunity-unofficialapi"
