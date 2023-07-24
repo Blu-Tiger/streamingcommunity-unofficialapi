@@ -66,7 +66,7 @@ jobs:
       run: python -m build
       
     - name: Publish package distributions to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v11
+      uses: pypa/gh-action-pypi-publish@master
 
       #uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
       #with:
