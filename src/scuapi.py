@@ -9,7 +9,7 @@ import re
 
 #streamingcommunity bet
 
-class SCAPI:
+class API:
     def __init__(self, DOMAIN, userAgent="Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"):
         self.userAgent = userAgent
         self.DOMAIN = DOMAIN
