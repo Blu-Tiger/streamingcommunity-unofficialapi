@@ -12,7 +12,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/Blu-Tiger/streamingcommunity-unofficialapi",
     description="A simple unofficial api for the italian StreamingCommunity website.",
-    version="0.0.3.1",
+    version="0.0.3.2",
     packages=find_packages(),
     install_requires=[
         "setuptools>=61.0",
