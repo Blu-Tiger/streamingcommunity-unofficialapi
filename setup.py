@@ -1,27 +1,24 @@
-from setuptools import setup, find_packages
+import setuptools
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-setup(
-    name="streamingcommunity_unofficialapi",
+setuptools.setup(
+    name="streamingcommunity-unofficialapi",
+    version="0.0.3.4",
     author="Beqir Stafa",
-    author_email="beqirstafa@gmail.com",
-    license='MIT',
+    description="A simple unofficial api for the italian StreamingCommunity website.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Blu-Tiger/streamingcommunity-unofficialapi",
-    description="A simple unofficial api for the italian StreamingCommunity website.",
-    version="0.0.3.3",
-    packages=find_packages(),
-    install_requires=[
-        "setuptools>=61.0",
-    ],
+    packages=setuptools.find_packages(),
+    install_requires=[],
+	license='MIT',
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-        "Topic :: Utilities",
+		"Topic :: Utilities",
     ],
     python_requires='>= 3.10',
 )
