@@ -28,6 +28,8 @@ on:
         description: 'Environment to run tests against'
         type: environment
         required: true
+  
+  
         
   release:
     types: [published]
@@ -36,6 +38,19 @@ permissions:
   contents: read
 
 jobs:
+  log-the-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Log level: $LEVEL"
+          echo "Tags: $TAGS"
+          echo "Environment: $ENVIRONMENT"
+        env:
+          LEVEL: ${{ inputs.logLevel }}
+          TAGS: ${{ inputs.tags }}
+          ENVIRONMENT: ${{ inputs.environment }}
+
+
   deploy:
 
     runs-on: ubuntu-latest
