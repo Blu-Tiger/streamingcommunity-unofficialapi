@@ -6,7 +6,7 @@ A simple unofficial api for the italian StreamingCommunity website.
 
 ![PyPI - Downloads](https://img.shields.io/pypi/dd/streamingcommunity-unofficialapi)
 ![PyPI - Downloads](https://img.shields.io/pypi/dw/streamingcommunity-unofficialapi)
-![PyPI - Downloads](https://img.shields.io/pypi/dy/streamingcommunity-unofficialapi)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/streamingcommunity-unofficialapi)
 
 
 # StreamingCommunity-API
