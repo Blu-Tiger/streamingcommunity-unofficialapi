@@ -3,12 +3,12 @@ A simple unofficial api for the italian StreamingCommunity website.
 ![Static Badge](https://img.shields.io/badge/3%2F2%2F2023-Working-green?style=for-the-badge)
 
 
-![PyPI](https://img.shields.io/pypi/v/streamingcommunity-unofficialapi)
-![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Blu-Tiger/streamingcommunity-unofficialapi)
+![PyPI](https://img.shields.io/pypi/v/streamingcommunity-unofficialapi?style=flat)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Blu-Tiger/streamingcommunity-unofficialapi?style=flat)
 
-![PyPI - Downloads](https://img.shields.io/pypi/dd/streamingcommunity-unofficialapi)
-![PyPI - Downloads](https://img.shields.io/pypi/dw/streamingcommunity-unofficialapi)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/streamingcommunity-unofficialapi)
+![PyPI - Downloads](https://img.shields.io/pypi/dd/streamingcommunity-unofficialapi?style=flat)
+![PyPI - Downloads](https://img.shields.io/pypi/dw/streamingcommunity-unofficialapi?style=flat)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/streamingcommunity-unofficialapi?style=flat)
 
 
 # StreamingCommunity-API
