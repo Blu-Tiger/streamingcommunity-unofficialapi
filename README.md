@@ -1028,4 +1028,4 @@ La funzione restituirà un dizionario contentente tutte le informazioni su Film 
 
 ### Download link
 
-Arriva presto con plugin yt-dlp
+I video possono essere scricati con il [plugin per yt-dlp](https://github.com/Blu-Tiger/StreamingCommunity-yt-dlp-plugin) usando il link dell'episodio.
