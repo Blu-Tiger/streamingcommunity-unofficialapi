@@ -1028,4 +1028,4 @@ La funzione restituirà un dizionario contentente tutte le informazioni su Film 
 
 ### Download link
 
-In progresso.
+Arriva presto con plugin yt-dlp
