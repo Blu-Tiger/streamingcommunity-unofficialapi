@@ -12,8 +12,18 @@ A simple unofficial api for the italian StreamingCommunity website.
 
 
 # StreamingCommunity-API
+### Table of Contents
+- [Installazione](#installazione)
+- [Utilizzo](#utilizzo)
+  - [Ricerca](#ricerca)
+    - [Esempio Film](#ricerca-esempio-film)
+    - [Esempio Serie](#ricerca-esempio-serie)
+  - [Info Film/Serie](#info-filmserie)
+    - [Esempio Film](#info-esempio-film)
+    - [Esempio Serie](#info-esempio-serie)
+- [Download Video](#download-video)
 
-## Installazione
+## Installazione <a name="installazione" />
 
 Questa libreria richiede [Python 3.10](https://www.python.org/) o superiore.
 
@@ -25,7 +35,7 @@ pip install streamingcommunity-unofficialapi
 ```
 
 
-## Utilizzo
+## Utilizzo <a name="utilizzo" />
 
 Per iniziare bisona impostare il dominio di StreamingCommunity che si desidera utilizzare.
 ```
@@ -35,7 +45,7 @@ sc = API('StreamingCommunity.esempio')
 
 ```
 
-### Ricerca
+### Ricerca <a name="ricerca" />
 Per ricercare un Film o una Serie per nome nel sito di StreamingCommunity è possibile usare la funzione search().
 
 ```
@@ -48,7 +58,7 @@ sc.search('John Wick')
 
 La funzione restituirà un dizionario contentente per chiave il nome del Film o Serie e per valore un dizionario contenente tutte le informazioni correllate.
 
-#### Esempio Film:
+#### Esempio Film: <a name="ricerca-esempio-film" />
 ```
 {
     "John Wick": {
@@ -108,7 +118,7 @@ La funzione restituirà un dizionario contentente per chiave il nome del Film o 
 }
 ```
 
-#### Esempio Serie:
+#### Esempio Serie: <a name="ricerca-esempio-serie" />
 ```
 {
   "Hazbin Hotel": {
@@ -162,7 +172,7 @@ La funzione restituirà un dizionario contentente per chiave il nome del Film o 
 }
 ```
 
-### Info Film/Serie
+### Info Film/Serie <a name="info-filmserie" />
 
 Per ottenere informazioni su un Film o una Serie è possibile usare la funzione load().
 
@@ -175,7 +185,7 @@ sc.load('https://StreamingCommunity.esempio/titles/6203-john-wick-4')
 
 La funzione restituirà un dizionario contentente tutte le informazioni su Film o Serie.
 
-#### Esempio Film:
+#### Esempio Film: <a name="info-esempio-film" />
 ```
 {
     "name": "John Wick 4",
@@ -254,7 +264,7 @@ La funzione restituirà un dizionario contentente tutte le informazioni su Film 
 
 ```
 
-#### Esempio Serie:
+#### Esempio Serie: <a name="info-esempio-serie" />
 ```
 {
   "name": "Hazbin Hotel",
@@ -1026,6 +1036,6 @@ La funzione restituirà un dizionario contentente tutte le informazioni su Film 
 
 ```
 
-### Download link
+## Download Video <a name="download-video" />
 
 I video possono essere scricati con il [plugin per yt-dlp](https://github.com/Blu-Tiger/StreamingCommunity-yt-dlp-plugin) usando il link dell'episodio.
