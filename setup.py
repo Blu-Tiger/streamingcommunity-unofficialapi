@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="streamingcommunity-unofficialapi",
-    version="0.0.3.4",
+    version="0.0.3.5",
     author="Beqir Stafa",
     description="A simple unofficial api for the italian StreamingCommunity website.",
     long_description=long_description,
