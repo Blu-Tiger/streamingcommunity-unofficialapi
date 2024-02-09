@@ -1037,7 +1037,7 @@ sc = API('StreamingCommunity.esempio')
   }
   ```
 
-- ### Link Iframe (embed) e Playlist m3u8 <a name="ricerca-esempio-film" />
+- ### Link Iframe (embed) e Playlist m3u8 <a name="getlinks" />
 
   ```
   from scuapi import API
