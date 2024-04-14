@@ -1050,8 +1050,8 @@ sc = API('StreamingCommunity.esempio')
   #### Esempio Risultati Link
 
   ```
-  ('https://vixcloud.co/embed/187503?token=c250fa66452196905729239d0630fc28&title=Hazbin+Hotel&referer=1&expires=1712698824&description=S1%3AE1+Ouverture&nextEpisode=1&b=1',
-  'https://vixcloud.co/playlist/187503?token=_SZhU9hVpDBU1Eld1p8PGQ&token=_SZhU9hVpDBU1Eld1p8PGQ&token480p=fkHMJTm4hOTW1yxBenQ8Vw&token720p=D9AarDND8u2sypbB11ApCA&expires=1712698824')
+  ('https://esempio.com/embed/187503?token=c250fa66452196905729239d0630fc28&title=Hazbin+Hotel&referer=1&expires=1712698824&description=S1%3AE1+Ouverture&nextEpisode=1&b=1',
+  'https://esempio.com/playlist/187503?token=_SZhU9hVpDBU1Eld1p8PGQ&token=_SZhU9hVpDBU1Eld1p8PGQ&token480p=fkHMJTm4hOTW1yxBenQ8Vw&token720p=D9AarDND8u2sypbB11ApCA&expires=1712698824')
   ```
 
 ## Download Video <a name="download-video" />
