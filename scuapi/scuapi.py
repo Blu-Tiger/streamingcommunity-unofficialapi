@@ -308,7 +308,7 @@ class API:
 
         Example:
         ```
-        iframe, m3u8_playlist = load_links('https://StreamingCommunity.esempio/watch/7540?e=50636')
+        iframe, m3u8_playlist = get_links('https://StreamingCommunity.esempio/watch/7540?e=50636')
         ```
 
         """
