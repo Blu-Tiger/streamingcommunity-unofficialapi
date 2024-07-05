@@ -55,8 +55,9 @@ sc = API('StreamingCommunity.esempio')
   ```
 
   La funzione restituirà un dizionario contentente per chiave il nome del Film o Serie e per valore un dizionario contenente tutte le informazioni correllate.
-
-  #### Esempio Film: <a name="ricerca-esempio-film" />
+  
+  <details>
+  <summary>#### Esempio Film: <a name="ricerca-esempio-film" /></summary>
 
   ```
   {
@@ -116,8 +117,10 @@ sc = API('StreamingCommunity.esempio')
       },
   }
   ```
+   </details>
 
-  #### Esempio Serie: <a name="ricerca-esempio-serie" />
+  <details>
+  <summary>#### Esempio Serie: <a name="ricerca-esempio-serie" /></summary>
 
   ```
   {
@@ -171,6 +174,7 @@ sc = API('StreamingCommunity.esempio')
     }
   }
   ```
+   </details>
 
 - ### Info Film/Serie <a name="info-filmserie" />
 
@@ -185,7 +189,8 @@ sc = API('StreamingCommunity.esempio')
 
   La funzione restituirà un dizionario contentente tutte le informazioni su Film o Serie.
 
-  #### Esempio Film: <a name="info-esempio-film" />
+<details>
+  <summary>#### Esempio Film: <a name="info-esempio-film" /></summary>
 
   ```
   {
@@ -264,8 +269,10 @@ sc = API('StreamingCommunity.esempio')
   }
 
   ```
+   </detils>
 
-  #### Esempio Serie: <a name="info-esempio-serie" />
+<details>
+  <summary>#### Esempio Serie: <a name="info-esempio-serie" /></summary>
 
   ```
   {
@@ -1036,6 +1043,7 @@ sc = API('StreamingCommunity.esempio')
     ]
   }
   ```
+   </details>
 
 - ### Link Iframe (embed) e Playlist m3u8 <a name="getlinks" />
 
