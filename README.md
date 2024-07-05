@@ -57,7 +57,7 @@ sc = API('StreamingCommunity.esempio')
   La funzione restituirà un dizionario contentente per chiave il nome del Film o Serie e per valore un dizionario contenente tutte le informazioni correllate.
   
   <details>
-  <summary>#### Esempio Film: <a name="ricerca-esempio-film" /></summary>
+  #### <summary>Esempio Film: <a name="ricerca-esempio-film" /></summary>
 
   ```
   {
@@ -120,7 +120,7 @@ sc = API('StreamingCommunity.esempio')
    </details>
 
   <details>
-  <summary>#### Esempio Serie: <a name="ricerca-esempio-serie" /></summary>
+  #### <summary>Esempio Serie: <a name="ricerca-esempio-serie" /></summary>
 
   ```
   {
@@ -190,7 +190,7 @@ sc = API('StreamingCommunity.esempio')
   La funzione restituirà un dizionario contentente tutte le informazioni su Film o Serie.
 
 <details>
-  <summary>#### Esempio Film: <a name="info-esempio-film" /></summary>
+  #### <summary>Esempio Film: <a name="info-esempio-film" /></summary>
 
   ```
   {
@@ -269,10 +269,10 @@ sc = API('StreamingCommunity.esempio')
   }
 
   ```
-   </detils>
+  </detils>
 
-<details>
-  <summary>#### Esempio Serie: <a name="info-esempio-serie" /></summary>
+  <details>
+  #### <summary>Esempio Serie: <a name="info-esempio-serie" /></summary>
 
   ```
   {
