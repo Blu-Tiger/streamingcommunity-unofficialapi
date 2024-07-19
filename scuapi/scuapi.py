@@ -106,8 +106,7 @@ class API:
         search_results = document.json()["data"]
         output_dict = {}
         for result in search_results:
-            result["url"] = f"{
-                self._url}/titles/{result['id']}-{result['slug']}"
+            result["url"] = f"{self._url}/titles/{result['id']}-{result['slug']}"
             output_dict[result["name"]] = result
 
         return output_dict  # [result for result in search_results]
