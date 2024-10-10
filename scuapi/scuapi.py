@@ -332,8 +332,7 @@ class API:
             if y and 'token' in x:
                 tokens_url = tokens_url + '&' + x + '=' + y
 
-        dl_url = playlist_url + '?' + tokens_url + \
-            '&expires=' + playlist_info.get('expires')
+        dl_url = playlist_url + '?' + 'expires=' + playlist_info.get('expires')
 
         return iframeinfo_url, dl_url
 
