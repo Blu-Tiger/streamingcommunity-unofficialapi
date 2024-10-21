@@ -37,7 +37,7 @@ pip install streamingcommunity-unofficialapi
 
 Per iniziare bisona impostare il dominio di StreamingCommunity che si desidera utilizzare.
 
-```
+```python
 from scuapi import API
 
 sc = API('StreamingCommunity.esempio')
@@ -47,7 +47,7 @@ sc = API('StreamingCommunity.esempio')
 
   Per ricercare un Film o una Serie per nome nel sito di StreamingCommunity è possibile usare la funzione search().
 
-  ```
+  ```python
   from scuapi import API
 
   sc = API('StreamingCommunity.esempio')
@@ -180,7 +180,7 @@ sc = API('StreamingCommunity.esempio')
 
   Per ottenere informazioni su un Film o una Serie è possibile usare la funzione load().
 
-  ```
+  ```python
   from scuapi import API
 
   sc = API('StreamingCommunity.esempio')
@@ -1047,12 +1047,12 @@ sc = API('StreamingCommunity.esempio')
 
 - ### Link Iframe (embed) e Playlist m3u8 <a name="getlinks" />
 
-  ```
+  ```python
   from scuapi import API
 
   sc = API('StreamingCommunity.esempio')
 
-  iframe, m3u8_playlist = get_links('https://StreamingCommunity.esempio/watch/7540?e=50636')
+  iframe, m3u8_playlist = sc.get_links('https://StreamingCommunity.esempio/watch/7540?e=50636')
   ```
 
   #### Esempio Risultati Link
