@@ -140,9 +140,6 @@ class API:
             Unable to reach '%s'
             """, url, url)
         soup = BeautifulSoup(document.content, "html.parser")
-        poster = re.search(
-            r"url\((.*)\)", soup.find("div", class_="title-container")["style"]
-        ).group(1)
 
         # Estrarre l'ID dell'elemento dall'URL
         # Extract the item ID from the URL
@@ -158,16 +155,22 @@ class API:
             Impossibile raggiungere '%s'
             Unable to reach '%s'
             """, self._url, self._url)
-
+        
         # Estrarre i vari dati
         # Extract the various data
         media_type = "Movie" if datajs["type"] == "movie" else "TvSeries"
 
         year = datajs["release_date"].split("-")[0]
-
+        
         pagedata = soup.find(id="app")["data-page"]
 
         props = json.loads(pagedata)["props"]
+
+        # poster code
+        cdn = props["cdn_url"]
+        images = datajs["images"]
+        poster_filename = [i["filename"] for i in images if i["type"] == "poster"][0]
+        poster = f'{cdn}/{poster_filename}'
 
         trailer_info = props["title"]["trailers"]
         trailer_url = (
@@ -271,7 +274,7 @@ class API:
             }
 
         return {
-            "name": soup.select_one("div > div > h1").text,
+            "name": props["title"]["name"],
             "url": f"{self._url}/watch/{props['title']['id']}",
             "scws_id": props["title"]["scws_id"],
             "type": media_type,
