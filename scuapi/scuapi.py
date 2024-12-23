@@ -1,31 +1,90 @@
 """
     StreamingCommunity API for Python
 """
+
 # import time
 # import hashlib
 # import base64
 import json
 import re
 import html
-import logging
-from bs4 import BeautifulSoup
+from urllib.parse import urlparse
 import requests
 
 REQ_TIMEOUT = 5
 
 
-def _wbpage_as_text(url):
-    try:
-        response = requests.get(url, timeout=REQ_TIMEOUT)
-    except requests.exceptions.Timeout:
-        logging.error("""
-        Impossibile raggiungere '%s'
-        Unable to reach '%s'
-        """, url, url)
-    if response.status_code == 200:
-        return html.unescape(response.text)
-    else:
-        logging.error("Failed to fetch the website.")
+class SCAPIError(Exception):
+    """Base exception"""
+
+
+class WebPageTimeOutError(SCAPIError):
+    """Raised when fetching timeouts"""
+
+    def __init__(self, url):
+        self.message = f"""
+            Impossibile raggiungere '{url}'.
+            Unable to reach '{url}'.
+            """
+        super().__init__(self.message)
+
+
+class WebPageStatusCodeError(SCAPIError):
+    """Raised when status code not 200"""
+
+    def __init__(self, url, status_code):
+        self.message = f"""
+            '{url}' ha restituito {status_code} http error code.
+            '{url}' returned {status_code} http error code.
+            """
+        super().__init__(self.message)
+
+
+class MatchNotFound(SCAPIError):
+    """Raised when regex match fails"""
+
+    def __init__(self, name):
+        self.message = f"""
+            Impossibile estrarre {name}.
+            Unable to get {name}.
+            """
+        super().__init__(self.message)
+
+
+class NoSeasonFoundError(SCAPIError):
+    """Raised when regex match fails"""
+
+    def __init__(self, name):
+        self.message = f"""
+                Nessuna stagione trovata per la serie {name}
+                No Seasons Found for the series {name}
+                """
+        super().__init__(self.message)
+
+
+class InvalidJSON(SCAPIError):
+    """Raised when regex match returns invalid json"""
+
+    def __init__(self, name, e, data):
+        self.message = f"""
+            {name} contiene JSON non valido:
+            {name} contains Invalid JSON data:
+            Data: {data}
+            Error: {e}
+            """
+        super().__init__(self.message)
+
+
+class PreviewError(SCAPIError):
+    """Raised when unable to get preview data"""
+
+    def __init__(self, name, e):
+        self.message = f"""
+            Impossibile ottenere i dati per {name}
+            Unable to get preview data for {name}
+            Error: {e}
+            """
+        super().__init__(self.message)
 
 
 class API:
@@ -34,17 +93,22 @@ class API:
     A class to interact with the StreamingCommunity API, handling search and data retrieval operations.
 
     Attributes:
-        user_agent (str): La stringa User-Agent da usare nelle intestazioni HTTP per le richieste.
+        user_agent (str):
+            La stringa User-Agent da usare nelle intestazioni HTTP per le richieste.
             The User-Agent string to be used in HTTP headers for requests.
-        domain (str): Il nome di dominio dell'API.
+        domain (str):
+            Il nome di dominio dell'API.
             The domain name of the API.
-        _url (str): L'URL completo costruito dal nome di dominio per effettuare le richieste API.
+        _url (str):
+            L'URL completo costruito dal nome di dominio per effettuare le richieste API.
             The full URL constructed from the domain name for making API requests.
 
     Args:
-        domain (str): Il nome di dominio dell'API.
+        domain (str):
+            Il nome di dominio dell'API.
             The domain name of the API.
-        user_agent (str, optional):  La stringa User-Agent da usare nelle intestazioni HTTP. Per impostazione predefinita, è una stringa User-Agent Edge browser in esecuzione su Windows 7.
+        user_agent (str, optional):
+            La stringa User-Agent da usare nelle intestazioni HTTP. Per impostazione predefinita, è una stringa User-Agent Edge browser in esecuzione su Windows 7.
             The User-Agent string to be used in HTTP headers. Defaults to a standard User-Agent Edge browser running on Windows 7.
     """
 
@@ -55,7 +119,24 @@ class API:
     ):
         self.user_agent = user_agent
         self.domain = domain
-        self._url = "https://" + self.domain
+        self._url = urlparse("https://" + self.domain)
+
+    def _wbpage_as_text(self, url):
+        try:
+            response = requests.get(url, timeout=REQ_TIMEOUT)
+        except requests.exceptions.Timeout as e:
+            raise WebPageTimeOutError(url) from e
+        if response.status_code == 200:
+            return html.unescape(response.text)
+        else:
+            raise WebPageStatusCodeError(url, response.status_code)
+
+    def _html_regex(self, reg, webpage, name):
+        match = re.search(reg, webpage)
+        if match:
+            return match.group(1)
+        else:
+            raise MatchNotFound(name)
 
     def search(self, query):
         """
@@ -63,11 +144,13 @@ class API:
         Searches the API for a given query and returns a dictionary of results.
 
         Args:
-            query (str): La query di ricerca.
+            query (str):
+                La query di ricerca.
                 The search query.
 
         Returns:
-            dict: Un dizionario in cui le chiavi sono i nomi dei risultati della ricerca e i valori sono dizionari contenenti i dettagli di ciascun risultato.
+            dict:
+                Un dizionario in cui le chiavi sono i nomi dei risultati della ricerca e i valori sono dizionari contenenti i dettagli di ciascun risultato.
                 A dictionary where keys are the names of the search results and values are dictionaries containing details about each result.
 
         Example:
@@ -77,97 +160,114 @@ class API:
         """
 
         headers = {"user-agent": self.user_agent}
-        try:
-            # Ottenere l'URL principale di StreamingCommunity
-            # Get the main  StreamingCommunity URL
-            main_url = requests.get(
-                self._url, headers=headers, timeout=REQ_TIMEOUT).url
-        except requests.exceptions.Timeout:
-            logging.error(
-                """
-            Impossibile raggiungere '%s'
-            Unable to reach '%s'
-            """, self._url, self._url)
         query_formatted = query.replace(" ", "%20")
-        url = f"{main_url}api/search?q={query_formatted}"
+        url = f"{self._url.geturl()}/api/search?q={query_formatted}"
 
         try:
             # Ottenere i risultati della ricerca
             # Getting the research results
             document = requests.get(url, headers=headers, timeout=REQ_TIMEOUT)
-        except requests.exceptions.Timeout:
-            logging.error("""
-            Impossibile raggiungere '%s'
-            Unable to reach '%s'
-            """, url, url)
+        except requests.exceptions.Timeout as e:
+            raise WebPageTimeOutError(query) from e
 
         # Estrarre i risultati della ricerca
-        # Extract the research results
-        search_results = document.json()["data"]
-        output_dict = {}
-        for result in search_results:
-            result["url"] = f"{self._url}/titles/{result['id']}-{result['slug']}"
-            output_dict[result["name"]] = result
+        # Extract the search results
+        try:
+            search_results = document.json()["data"]
+            output_dict = {}
+            for result in search_results:
+                result["url"] = f"{self._url}/titles/{result['id']}-{result['slug']}"
+                output_dict[result["name"]] = result
+        except Exception as e:
+            raise InvalidJSON(query, e, document) from e
 
         return output_dict  # [result for result in search_results]
 
-    def load(self, url):
+    def preview(self, content_slug):
+        """
+        Carica informazioni minime su un elemento specifico in base al suo URL.
+        Loads minimal information about a specific item by its URL.
+
+        Args:
+            content_slug (str):
+                L'ID dell'elemento da caricare per i dettagli.
+                The ID of the item to load details for.
+
+        Returns:
+            dict:
+                Un dizionario contenente informazioni minimali sull'elemento:
+                A dictionary containing detailed information about the item:
+                    {id, type, runtime, release_date, quality, plot, seasons_count, preview (only for movies), images, generes}.
+
+        Example:
+        ```
+        film_info = preview('6203-movie-name')
+        ```
+        """
+        headers = {"user-agent": self.user_agent}
+        content_id = content_slug.split("-")[0]
+        try:
+            data = requests.post(
+                self._url.geturl() + "/api/titles/preview/" + content_id,
+                headers=headers,
+                timeout=REQ_TIMEOUT,
+            )
+        except Exception as e:
+            raise PreviewError(content_slug, e) from e
+        try:
+            data_dict = data.json()
+        except Exception as e:
+            raise InvalidJSON(content_slug, e, data) from e
+        return data_dict
+
+    def load(self, content_slug):
         """
         Carica informazioni dettagliate su un elemento specifico in base al suo URL.
         Loads detailed information about a specific item by its URL.
 
         Args:
-            url (str): L'URL dell'elemento da caricare per i dettagli.
+            content_id (str | int):
+                L'URL dell'elemento da caricare per i dettagli.
                 The URL of the item to load details for.
 
         Returns:
-            dict: Un dizionario contenente informazioni dettagliate sull'articolo, come il tipo, l'anno, la trama, le valutazioni e altro ancora.
+            dict:
+                Un dizionario contenente informazioni dettagliate sull'elemento, come il tipo, l'anno, la trama, le valutazioni e altro ancora.
                 A dictionary containing detailed information about the item, such as type, year, plot, ratings, and more.
 
         Example:
         ```
-        film_info = load('https://StreamingCommunity.esempio/watch/6203')
+        film_info = load('6203-movie-name')
         ```
         """
-        headers = {"user-agent": self.user_agent}
+        headers = {
+            "user-agent": self.user_agent,
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-Inertia": "true",
+            "X-Inertia-Version": "86b6dc1a1dbbf21b4a86da173e2975b2",
+        }
+        url = self._url.geturl() + "/titles/" + content_slug
         try:
             # Ottenere la risposta dell'url dell'elemento
             # Get the response of the item's url
-            document = requests.get(url, headers=headers, timeout=REQ_TIMEOUT)
-        except requests.exceptions.Timeout:
-            logging.error("""
-            Impossibile raggiungere '%s'
-            Unable to reach '%s'
-            """, url, url)
-        soup = BeautifulSoup(document.content, "html.parser")
-        poster = re.search(
-            r"url\((.*)\)", soup.find("div", class_="title-container")["style"]
-        ).group(1)
+            resp = requests.get(url, headers=headers, timeout=REQ_TIMEOUT)
+            data = resp.json()
+        except requests.exceptions.Timeout as e:
+            raise WebPageTimeOutError(url) from e
 
-        # Estrarre l'ID dell'elemento dall'URL
-        # Extract the item ID from the URL
-        item_id = "".join(filter(str.isdigit, url.split("-")[0]))
-        try:
-            # Ottenere i dati dell'elemento
-            # Get the item's data
-            datajs = requests.post(
-                f"{self._url}/api/titles/preview/{item_id}", headers=headers, timeout=REQ_TIMEOUT
-            ).json()
-        except requests.exceptions.Timeout:
-            logging.error("""
-            Impossibile raggiungere '%s'
-            Unable to reach '%s'
-            """, self._url, self._url)
+        preview_data = self.preview(content_slug)
 
         # Estrarre i vari dati
         # Extract the various data
-        media_type = "Movie" if datajs["type"] == "movie" else "TvSeries"
+        media_type = "Movie" if preview_data["type"] == "movie" else "TvSeries"
 
-        year = datajs["release_date"].split("-")[0]
+        images = preview_data["images"]
 
-        pagedata = soup.find(id="app")["data-page"]
+        year = preview_data["release_date"].split("-")[0]
 
-        props = json.loads(pagedata)["props"]
+        props = data["props"]
 
         trailer_info = props["title"]["trailers"]
         trailer_url = (
@@ -205,30 +305,17 @@ class API:
             episode_list = []
             for se in seasons:
                 season = int(se["number"])
+                se_url = f"{url}/stagione-{season}"
                 try:
-                    document = requests.get(
-                        f"{url}/stagione-{season}", headers=headers, timeout=REQ_TIMEOUT)
-                except requests.exceptions.Timeout:
-                    logging.error("""
-                    Impossibile raggiungere '%s'
-                    Unable to reach '%s'
-                    """, url, url)
-                soup = BeautifulSoup(document.content, "html.parser")
-                pagedata = soup.find(id="app")["data-page"]
-                episodes = json.loads(pagedata)[
-                    "props"]["loadedSeason"]["episodes"]
+                    resp = requests.get(se_url, headers=headers, timeout=REQ_TIMEOUT)
+                    se_data = resp.json()
+                except requests.exceptions.Timeout as e:
+                    raise WebPageTimeOutError(se_url) from e
+                episodes = se_data["props"]["loadedSeason"]["episodes"]
                 sid = se["title_id"]
                 for ep in episodes:
                     scws_id = ep["scws_id"]
                     href = f"{self._url}/watch/{sid}?e={ep['id']}"
-                    post_image = (
-                        "https://cdn."
-                        + self.domain
-                        + "/images/"
-                        + ep["images"][0]["filename"]
-                        if ep["images"]
-                        else None
-                    )
 
                     episode = {
                         "name": ep["name"],
@@ -236,24 +323,21 @@ class API:
                         "episode": int(ep["number"]),
                         "description": ep["plot"],
                         "duration": int(ep["duration"]),
-                        "posterUrl": post_image,
+                        "images": ep["images"],
                         "url": href,
                         "scws_id": scws_id,
                     }
                     episode_list.append(episode)
 
             if not episode_list:
-                logging.error("""
-                Nessuna stagione trovata
-                No Seasons Found
-                """)
+                raise NoSeasonFoundError(name)
 
             return {
                 "name": name,
                 "url": url,
                 "type": media_type,
                 "episodeList": episode_list,
-                "posterUrl": poster,
+                "images": images,
                 "year": int("".join(filter(str.isdigit, year))),
                 "plot": plot,
                 "tmdb_id": tmdb_id,
@@ -265,17 +349,17 @@ class API:
                 "sub_ita": bool(sub_ita),
                 "rating": int(float(score) * 1000),
                 "seasons_count": seasons_count,
-                "tags": [genre["name"] for genre in datajs["genres"]],
+                "tags": [genre["name"] for genre in preview_data["genres"]],
                 "trailerUrl": trailer_url,
                 "recommendations": correlates_list,
             }
 
         return {
-            "name": soup.select_one("div > div > h1").text,
-            "url": f"{self._url}/watch/{props['title']['id']}",
+            "name": props["title"]["name"],
+            "url": url,
             "scws_id": props["title"]["scws_id"],
             "type": media_type,
-            "posterUrl": poster,
+            "images": images,
             "year": int("".join(filter(str.isdigit, year))),
             "plot": plot,
             "tmdb_id": tmdb_id,
@@ -286,95 +370,90 @@ class API:
             "release_date": release_date,
             "sub_ita": bool(sub_ita),
             "rating": int(float(score) * 1000),
-            "tags": [genre["name"] for genre in datajs["genres"]],
+            "tags": [genre["name"] for genre in preview_data["genres"]],
             "duration": int(props["title"]["runtime"]),
             "trailerUrl": trailer_url,
             "recommendations": correlates_list,
         }
 
-    def get_links(self, url):
+    def get_links(self, content_id, episode_id=None):
         """
         Estrai la playlist m3u8
         Get the m3u8 playlist
 
         Args:
-        - url (str): L'url dell'episodio o del film dalla funzione load().
-            The url of the episode or film from the load() function.
+            content_id (str | int):
+                L'ID dell'elemento.
+                The ID of the item.
+
+            episode_id (str | int | none):
+                L'ID dell'episodio se è una serie.
+                The ID of the episode if it's a series.
 
         Returns:
-        - tuple: Una tupla contenente il contenuto dell'iframe da incorporare e l'URL scaricabile.
-            A tuple containing the iframe content for embedding and the downloadable URL.
+            tuple:
+                Una tupla contenente il contenuto dell'iframe da incorporare e l'URL scaricabile.
+                A tuple containing the iframe content for embedding and the downloadable URL.
 
         Example:
         ```
-        iframe, m3u8_playlist = get_links('https://StreamingCommunity.esempio/watch/7540?e=50636')
+        iframe, m3u8_playlist = get_links(50636)
         ```
 
         """
 
-        webpage = (_wbpage_as_text(url))
+        webpage = self._wbpage_as_text(
+            self._url.geturl()
+            + "/watch/"
+            + str(content_id)
+            + ("" if episode_id is None else ("&e=" + str(episode_id)))
+        )
 
-        info = json.loads(re.search(
-            r'data-page="([\s\S]+})"', webpage).group(1))
-        iframe = _wbpage_as_text(info['props']['embedUrl'])
-        iframeinfo_url = re.search(
-            r'<iframe[^>]+src="([^"]+)', iframe).group(1)
-        vixcloud_iframe = _wbpage_as_text(iframeinfo_url)
-        playlist_info = json.loads(re.sub(r',[^"]+}', '}', re.search(
-            r'window\.masterPlaylist[^:]+params:[^{]+({[^<]+?})', vixcloud_iframe).group(1).replace('\'', '"')))
-        playlist_url = re.search(
-            r'window\.masterPlaylist[^<]+url:[^<]+\'([^<]+?)\'', vixcloud_iframe).group(1)
-        # video_info = json.loads(self._html_search_regex(r'window\.video[^{]+({[^<]+});',vixcloud_iframe,'iframe info'))
-        tokens_url = ''
-        for x, y in playlist_info.items():
-            if y and x == 'token':
-                tokens_url = x + '=' + y
-            if y and 'token' in x:
-                tokens_url = tokens_url + '&' + x + '=' + y
+        # Extract information from data-page attribute
+        info = json.loads(
+            re.sub(
+                r',[^"]+}',
+                "}",
+                self._html_regex(r'data-page="([\s\S]+})"', webpage, "info"),
+            )
+        )
 
-        dl_url = playlist_url + '?' + 'expires=' + playlist_info.get('expires')
+        # Extract the video page url
+        video_page_url = self._wbpage_as_text(info["props"]["embedUrl"])
 
-        return iframeinfo_url, dl_url
+        # Get the iframe url and iframe page
+        iframe_url = self._html_regex(
+            r'<iframe[^>]+src\s*=\s*"([^"]+)', video_page_url, "iframe url"
+        )
+        iframe_page = self._wbpage_as_text(iframe_url)
 
-    # Old method
-    #     ip = requests.get("https://api.ipify.org/").text
+        # Extract the playlist params and url from the page js
+        playlist_params = json.loads(
+            re.sub(
+                r',[^"]+}',
+                "}",
+                self._html_regex(
+                    r"window\.masterPlaylist[^:]+params:[^{]+({[^<]+?})",
+                    iframe_page,
+                    "playlist params",
+                ).replace("'", '"'),
+            )
+        )
+        playlist_url = self._html_regex(
+            r"window\.masterPlaylist[^<]+url:[^<]+\'([^<]+?)\'",
+            iframe_page,
+            "playlist url",
+        )
+        # video_info = json.loads(self._html_regex(r'window\.video[^{]+({[^<]+});',vixcloud_iframe, "video info")
 
-    #     media_type = 'Movie' if data['type'] == 'Movie' else 'TvSeries'
+        # Generate the polaylist url
+        dl_url = (
+            playlist_url
+            + ("&" if bool(re.search(r"\?[^#]+", playlist_url)) else "?")
+            + "&expires="
+            + playlist_params.get("expires")
+            + "&token="
+            + playlist_params.get("token")
+        )
 
-    #     return 'Still working on it!'
-
-    #     if media_type == 'TvSeries':
-    #         links = []
-    #         for ep in data['episodeList']:
-    #             scwsid = ep['scws_id']
-
-    #             expire = str(int(time.time()) + 172800)
-    #             token0 = (expire + ip + " Yc8U6r8KjAKAepEA").encode()
-    #             token1 = hashlib.md5(token0).digest()
-    #             token2 = base64.b64encode(token1).decode()
-    #             token = token2.replace("=", "").replace("+", "-").replace("/", "_")
-
-    #             link = f'https://vixcloud.co/v2/playlist/{scwsid}?token={token}&token480p={token}&expires={expire}&n=1'
-
-    #             links.append(link)
-
-    #         return links
-
-    #     else:
-    #         scwsid = data['scws_id']
-
-    #         expire = str(int(time.time()) + 172800)
-
-    #         token0 = (expire + ip + " Yc8U6r8KjAKAepEA").encode()
-    #         token1 = hashlib.md5(token0).digest()
-    #         token2 = base64.b64encode(token1).decode()
-    #         token = token2.replace("=", "").replace("+", "-").replace("/", "_")
-
-    #         #link = f'https://scws.work/master/{scwsid}?token={token}&expires={expire}&n=1'
-    #         link = f'https://vixcloud.co/v2/playlist/{scwsid}?token={token}&token480p={token}&expires={expire}&n=1'
-    #                 #https://vixcloud.co/v2/playlist/159536?token=t5OmJHPGf9Ti3DXdd0l_AQ&token360p=&token480p=cEjEiuArJcYsrbPzksSQTQ&token720p=n-00eKBvOxqRh0ISQjbu3Q&token1080p=&expires=1695317130&canCast=1&n=1&b=1
-
-    #         #https://vixcloud.co/v2/playlist/159536?type=video&rendition=1080p&token=&expires=1695316859&canCast=1&b=1&n=1
-    #         #https://vixcloud.co/v2/playlist/159536?type=video&rendition=1080p&token=HjLZ1Qbx0oNt7u7DbDHM3w&expires=1690305563&n=1
-
-    #         return link
+        return iframe_url, dl_url
