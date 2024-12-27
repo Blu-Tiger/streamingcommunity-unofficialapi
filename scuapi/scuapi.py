@@ -242,18 +242,15 @@ class API:
         """
         headers = {
             "user-agent": self.user_agent,
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "X-Requested-With": "XMLHttpRequest",
-            "X-Inertia": "true",
-            "X-Inertia-Version": "86b6dc1a1dbbf21b4a86da173e2975b2",
         }
         url = self._url.geturl() + "/titles/" + content_slug
         try:
             # Ottenere la risposta dell'url dell'elemento
             # Get the response of the item's url
-            resp = requests.get(url, headers=headers, timeout=REQ_TIMEOUT)
-            data = resp.json()
+            resp = self._wbpage_as_text(url)
+            data = json.loads(
+                self._html_regex(r'data-page="([\s\S]+})"', resp, "page data")
+            )
         except requests.exceptions.Timeout as e:
             raise WebPageTimeOutError(url) from e
 
@@ -307,8 +304,10 @@ class API:
                 season = int(se["number"])
                 se_url = f"{url}/stagione-{season}"
                 try:
-                    resp = requests.get(se_url, headers=headers, timeout=REQ_TIMEOUT)
-                    se_data = resp.json()
+                    resp = self._wbpage_as_text(url)
+                    se_data = json.loads(
+                        self._html_regex(r'data-page="([\s\S]+})"', resp, "page data")
+                    )
                 except requests.exceptions.Timeout as e:
                     raise WebPageTimeOutError(se_url) from e
                 episodes = se_data["props"]["loadedSeason"]["episodes"]
