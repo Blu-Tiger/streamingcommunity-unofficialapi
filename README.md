@@ -1,6 +1,6 @@
 A simple unofficial api for the italian StreamingCommunity website.
 
-![Static Badge](https://img.shields.io/badge/version-2.0.1-green?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/23%2F12%2F2024-Working-green?style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/version-2.0.2-green?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/23%2F12%2F2024-Working-green?style=for-the-badge)
 
 [![PyPI](https://img.shields.io/pypi/v/streamingcommunity-unofficialapi?style=flat)](https://pypi.org/project/streamingcommunity-unofficialapi/)
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Blu-Tiger/streamingcommunity-unofficialapi?style=flat)
@@ -55,7 +55,7 @@ sc = API('StreamingCommunity.esempio')
   ```
 
   La funzione restituirà un dizionario contentente per chiave il nome del Film o Serie e per valore un dizionario contenente tutte le informazioni correllate.
-  
+
   <details>
   <summary>Esempio Film: <a name="ricerca-esempio-film" /></summary>
 
@@ -117,6 +117,7 @@ sc = API('StreamingCommunity.esempio')
       },
   }
   ```
+
    </details>
 
   <details>
@@ -174,6 +175,7 @@ sc = API('StreamingCommunity.esempio')
     }
   }
   ```
+
   </details>
 
 - ### Info Film/Serie <a name="info-filmserie" />
@@ -325,6 +327,7 @@ sc = API('StreamingCommunity.esempio')
       ],
   }
   ```
+
   </details>
 
   <details>
@@ -622,6 +625,7 @@ sc = API('StreamingCommunity.esempio')
       ],
   }
   ```
+
    </details>
 
 - ### Link Iframe (embed) e Playlist m3u8 <a name="getlinks" />

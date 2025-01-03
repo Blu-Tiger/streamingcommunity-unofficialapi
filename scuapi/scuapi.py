@@ -438,21 +438,36 @@ class API:
                 ).replace("'", '"'),
             )
         )
-        playlist_url = self._html_regex(
-            r"window\.masterPlaylist[^<]+url:[^<]+\'([^<]+?)\'",
-            iframe_page,
-            "playlist url",
+        streams = json.loads(
+            self._html_regex(
+                r"window\.streams[^=]+=[^[](\[.*\])",
+                iframe_page,
+                "playlist streams",
+            )
         )
+
+        playlist_url = next((sub for sub in streams if sub["active"] is True), None)[
+            "url"
+        ]
+        # playlist_url = self._html_regex(
+        #     r"window\.masterPlaylist[^<]+url:[^<]+\'([^<]+?)\'",
+        #     iframe_page,
+        #     "playlist url",
+        # )
         # video_info = json.loads(self._html_regex(r'window\.video[^{]+({[^<]+});',vixcloud_iframe, "video info")
 
         # Generate the polaylist url
         dl_url = (
             playlist_url
             + ("&" if bool(re.search(r"\?[^#]+", playlist_url)) else "?")
-            + "&expires="
+            + "expires="
             + playlist_params.get("expires")
             + "&token="
             + playlist_params.get("token")
         )
 
         return iframe_url, dl_url
+
+
+sc = API("streamingcommunity.prof")
+print(sc.get_links("8052"))
