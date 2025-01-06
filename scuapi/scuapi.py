@@ -120,10 +120,13 @@ class API:
         self.user_agent = user_agent
         self.domain = domain
         self._url = urlparse("https://" + self.domain)
+        self.session = requests.Session()
 
     def _wbpage_as_text(self, url):
         try:
-            response = requests.get(url, timeout=REQ_TIMEOUT)
+            response = self.session.get(
+                url, headers={"user-agent": self.user_agent}, timeout=REQ_TIMEOUT
+            )
         except requests.exceptions.Timeout as e:
             raise WebPageTimeOutError(url) from e
         if response.status_code == 200:
@@ -166,7 +169,7 @@ class API:
         try:
             # Ottenere i risultati della ricerca
             # Getting the research results
-            document = requests.get(url, headers=headers, timeout=REQ_TIMEOUT)
+            document = self.session.get(url, headers=headers, timeout=REQ_TIMEOUT)
         except requests.exceptions.Timeout as e:
             raise WebPageTimeOutError(query) from e
 
@@ -207,7 +210,7 @@ class API:
         headers = {"user-agent": self.user_agent}
         content_id = content_slug.split("-")[0]
         try:
-            data = requests.post(
+            data = self.session.post(
                 self._url.geturl() + "/api/titles/preview/" + content_id,
                 headers=headers,
                 timeout=REQ_TIMEOUT,
@@ -240,9 +243,6 @@ class API:
         film_info = load('6203-movie-name')
         ```
         """
-        headers = {
-            "user-agent": self.user_agent,
-        }
         url = self._url.geturl() + "/titles/" + content_slug
         try:
             # Ottenere la risposta dell'url dell'elemento
@@ -375,7 +375,7 @@ class API:
             "recommendations": correlates_list,
         }
 
-    def get_links(self, content_id, episode_id=None):
+    def get_links(self, content_id, episode_id=None, get_m3u=False):
         """
         Estrai la playlist m3u8
         Get the m3u8 playlist
@@ -388,6 +388,9 @@ class API:
             episode_id (str | int | none):
                 L'ID dell'episodio se è una serie.
                 The ID of the episode if it's a series.
+            get_m3u (bool):
+                Se si desidera direttamente il file m3u
+                If you want the m3u file
 
         Returns:
             tuple:
@@ -396,10 +399,14 @@ class API:
 
         Example:
         ```
-        iframe, m3u8_playlist = get_links(50636)
+        iframe, m3u_playlist_url = get_links(50636)
+        iframe, m3u_playlist_url, m3u_playlist_file = get_links(50636, get_m3u=True)
         ```
 
         """
+        headers = {
+            "user-agent": self.user_agent,
+        }
 
         webpage = self._wbpage_as_text(
             self._url.geturl()
@@ -466,8 +473,21 @@ class API:
             + playlist_params.get("token")
         )
 
-        return iframe_url, dl_url
+        if get_m3u:
+            m3u = None
+            try:
+                m3u_response = self.session.get(
+                    dl_url,
+                    headers=headers,
+                    timeout=REQ_TIMEOUT,
+                )
+            except requests.exceptions.Timeout as e:
+                raise WebPageTimeOutError("m3u URL") from e
+            if m3u_response.status_code == 200:
+                m3u = html.unescape(m3u_response.text)
+            else:
+                raise WebPageStatusCodeError("m3u URL", m3u_response.status_code)
 
-
-sc = API("streamingcommunity.prof")
-print(sc.get_links("8052"))
+            return iframe_url, dl_url, m3u
+        else:
+            return iframe_url, dl_url
