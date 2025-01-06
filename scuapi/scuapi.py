@@ -2,9 +2,6 @@
     StreamingCommunity API for Python
 """
 
-# import time
-# import hashlib
-# import base64
 import json
 import re
 import html
@@ -453,14 +450,23 @@ class API:
             )
         )
 
-        playlist_url = next((sub for sub in streams if sub["active"] is True), None)[
-            "url"
-        ]
-        # playlist_url = self._html_regex(
-        #     r"window\.masterPlaylist[^<]+url:[^<]+\'([^<]+?)\'",
-        #     iframe_page,
-        #     "playlist url",
-        # )
+        # playlist_url = next((sub for sub in streams if sub["active"] is True), None)[
+        #     "url"
+        # ]
+        playlist_url = self._html_regex(
+            r"window\.masterPlaylist[^<]+url:[^<]+\'([^<]+?)\'",
+            iframe_page,
+            "playlist url",
+        )
+
+        can_play_fhd = (
+            self._html_regex(
+                r"window\.canPlayFHD\s+?=\s+?(\w+)",
+                iframe_page,
+                "playlist fhd option",
+            )
+            == "true"
+        )
         # video_info = json.loads(self._html_regex(r'window\.video[^{]+({[^<]+});',vixcloud_iframe, "video info")
 
         # Generate the polaylist url
@@ -471,6 +477,7 @@ class API:
             + playlist_params.get("expires")
             + "&token="
             + playlist_params.get("token")
+            + ("&h=1" if can_play_fhd else "")
         )
 
         if get_m3u:
