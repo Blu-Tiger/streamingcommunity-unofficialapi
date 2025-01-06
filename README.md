@@ -635,7 +635,10 @@ sc = API('StreamingCommunity.esempio')
 
   sc = API('StreamingCommunity.esempio')
 
-  iframe, m3u8_playlist = sc.get_links('7540', '50636')
+  iframe, m3u_playlist_url = sc.get_links('7540', '50636')
+  # or
+  iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links('7540', '50636', get_m3u=True)
+  iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links('7540', episode_id='50636', get_m3u=True)
   ```
 
   #### Esempio Risultati Link
