@@ -479,6 +479,8 @@ class API:
             + playlist_params.get("token")
             + ("&h=1" if can_play_fhd else "")
         )
+        
+        sc_iframe_url = f"https://{self._url.geturl()}/iframe/{content_id}"
 
         if get_m3u:
             m3u = None
@@ -495,6 +497,6 @@ class API:
             else:
                 raise WebPageStatusCodeError("m3u URL", m3u_response.status_code)
 
-            return iframe_url, dl_url, m3u
+            return sc_iframe_url, dl_url, m3u
         else:
-            return iframe_url, dl_url
+            return sc_iframe_url, dl_url
