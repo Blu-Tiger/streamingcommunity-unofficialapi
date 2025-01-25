@@ -480,7 +480,7 @@ class API:
             + ("&h=1" if can_play_fhd else "")
         )
         
-        sc_iframe_url = f"https://{self._url.geturl()}/iframe/{content_id}"
+        sc_iframe_url = f"{self._url.geturl()}/iframe/{content_id}"
 
         if get_m3u:
             m3u = None
