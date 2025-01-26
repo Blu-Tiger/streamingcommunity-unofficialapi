@@ -497,6 +497,6 @@ class API:
             else:
                 raise WebPageStatusCodeError("m3u URL", m3u_response.status_code)
 
-            return sc_iframe_url, dl_url, m3u
+            return iframe_url, dl_url, m3u
         else:
-            return sc_iframe_url, dl_url
+            return iframe_url, dl_url
