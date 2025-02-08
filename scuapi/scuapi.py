@@ -301,7 +301,7 @@ class API:
                 season = int(se["number"])
                 se_url = f"{url}/stagione-{season}"
                 try:
-                    resp = self._wbpage_as_text(url)
+                    resp = self._wbpage_as_text(se_url)
                     se_data = json.loads(
                         self._html_regex(r'data-page="([\s\S]+})"', resp, "page data")
                     )
