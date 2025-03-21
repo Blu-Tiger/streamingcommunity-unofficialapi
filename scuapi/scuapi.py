@@ -259,7 +259,7 @@ class API:
 
         images = preview_data["images"]
 
-        year = preview_data["release_date"].split("-")[0]
+        year = preview_data["release_date"].split("-")[0] if preview_data["release_date"] else None
 
         props = data["props"]
 
@@ -269,8 +269,11 @@ class API:
             if trailer_info
             else None
         )
-
-        correlates = props["sliders"][0]["titles"]
+        if len(props["sliders"]) == 0:
+            correlates = []
+        else:
+            correlates = props["sliders"][0]["titles"]
+        
         size = min(len(correlates), 15)
         correlates_list = correlates[:size]
 
@@ -318,7 +321,7 @@ class API:
                         "season": season,
                         "episode": int(ep["number"]),
                         "description": ep["plot"],
-                        "duration": int(ep["duration"]),
+                        "duration": int(ep["duration"]) if ep["duration"] else None,
                         "images": ep["images"],
                         "url": href,
                         "scws_id": scws_id,
@@ -334,7 +337,7 @@ class API:
                 "type": media_type,
                 "episodeList": episode_list,
                 "images": images,
-                "year": int("".join(filter(str.isdigit, year))),
+                "year": int("".join(filter(str.isdigit, year))) if year else None,
                 "plot": plot,
                 "tmdb_id": tmdb_id,
                 "imdb_id": imdb_id,
@@ -343,7 +346,7 @@ class API:
                 "disney_id": disney_id,
                 "release_date": release_date,
                 "sub_ita": bool(sub_ita),
-                "rating": int(float(score) * 1000),
+                "rating": int(float(score) * 1000) if score else None,
                 "seasons_count": seasons_count,
                 "tags": [genre["name"] for genre in preview_data["genres"]],
                 "trailerUrl": trailer_url,
@@ -356,7 +359,7 @@ class API:
             "scws_id": props["title"]["scws_id"],
             "type": media_type,
             "images": images,
-            "year": int("".join(filter(str.isdigit, year))),
+            "year": int("".join(filter(str.isdigit, year))) if year else None,
             "plot": plot,
             "tmdb_id": tmdb_id,
             "imdb_id": imdb_id,
@@ -365,9 +368,9 @@ class API:
             "disney_id": disney_id,
             "release_date": release_date,
             "sub_ita": bool(sub_ita),
-            "rating": int(float(score) * 1000),
+            "rating":  int(float(score) * 1000) if score else None,
             "tags": [genre["name"] for genre in preview_data["genres"]],
-            "duration": int(props["title"]["runtime"]),
+            "duration": int(props["title"]["runtime"]) if props["title"]["runtime"] else None,
             "trailerUrl": trailer_url,
             "recommendations": correlates_list,
         }
@@ -404,25 +407,12 @@ class API:
         headers = {
             "user-agent": self.user_agent,
         }
-
-        webpage = self._wbpage_as_text(
-            self._url.geturl()
-            + "/watch/"
-            + str(content_id)
-            + ("" if episode_id is None else ("&e=" + str(episode_id)))
-        )
-
-        # Extract information from data-page attribute
-        info = json.loads(
-            re.sub(
-                r',[^"]+}',
-                "}",
-                self._html_regex(r'data-page="([\s\S]+})"', webpage, "info"),
-            )
-        )
+        
+        sc_iframe_url = f"{self._url.geturl()}/iframe/{content_id}?episode_id={episode_id}"
+        
 
         # Extract the video page url
-        video_page_url = self._wbpage_as_text(info["props"]["embedUrl"])
+        video_page_url = self._wbpage_as_text(sc_iframe_url)
 
         # Get the iframe url and iframe page
         iframe_url = self._html_regex(
@@ -479,8 +469,6 @@ class API:
             + playlist_params.get("token")
             + ("&h=1" if can_play_fhd else "")
         )
-        
-        sc_iframe_url = f"{self._url.geturl()}/iframe/{content_id}"
 
         if get_m3u:
             m3u = None
@@ -497,6 +485,6 @@ class API:
             else:
                 raise WebPageStatusCodeError("m3u URL", m3u_response.status_code)
 
-            return iframe_url, dl_url, m3u
+            return sc_iframe_url, dl_url, m3u
         else:
-            return iframe_url, dl_url
+            return sc_iframe_url, dl_url
