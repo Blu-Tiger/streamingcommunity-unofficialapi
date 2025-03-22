@@ -408,7 +408,7 @@ class API:
             "user-agent": self.user_agent,
         }
         
-        sc_iframe_url = f"{self._url.geturl()}/iframe/{content_id}?episode_id={episode_id}"
+        sc_iframe_url = f"{self._url.geturl()}/iframe/{content_id}{f"?episode_id={episode_id}" if episode_id else ""}"
         
 
         # Extract the video page url
