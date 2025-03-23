@@ -1,6 +1,6 @@
 A simple unofficial api for the italian StreamingCommunity website.
 
-![Static Badge](https://img.shields.io/badge/version-2.0.6-green?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/06%2F01%2F2025-Working-green?style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/version-2.1.0-green?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/23%2F03%2F2025-Working-green?style=for-the-badge)
 
 [![PyPI](https://img.shields.io/pypi/v/streamingcommunity-unofficialapi?style=flat)](https://pypi.org/project/streamingcommunity-unofficialapi/)
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Blu-Tiger/streamingcommunity-unofficialapi?style=flat)
@@ -635,8 +635,11 @@ sc = API('StreamingCommunity.esempio')
 
   sc = API('StreamingCommunity.esempio')
 
+  # Film
+  iframe, m3u_playlist_url = sc.get_links('7540')
+  iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links('7540', get_m3u=True)
+  # Serie
   iframe, m3u_playlist_url = sc.get_links('7540', '50636')
-  # or
   iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links('7540', '50636', get_m3u=True)
   iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links('7540', episode_id='50636', get_m3u=True)
   ```

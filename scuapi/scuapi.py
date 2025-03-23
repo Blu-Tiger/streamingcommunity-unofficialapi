@@ -20,8 +20,8 @@ class WebPageTimeOutError(SCAPIError):
 
     def __init__(self, url):
         self.message = f"""
-            Impossibile raggiungere '{url}'.
-            Unable to reach '{url}'.
+            Impossibile raggiungere "{url}".
+            Unable to reach "{url}".
             """
         super().__init__(self.message)
 
@@ -42,8 +42,8 @@ class MatchNotFound(SCAPIError):
 
     def __init__(self, name):
         self.message = f"""
-            Impossibile estrarre {name}.
-            Unable to get {name}.
+            Impossibile estrarre "{name}".
+            Unable to get "{name}".
             """
         super().__init__(self.message)
 
@@ -53,8 +53,8 @@ class NoSeasonFoundError(SCAPIError):
 
     def __init__(self, name):
         self.message = f"""
-                Nessuna stagione trovata per la serie {name}
-                No Seasons Found for the series {name}
+                Nessuna stagione trovata per la serie "{name}".
+                No Seasons Found for the series "{name}".
                 """
         super().__init__(self.message)
 
@@ -64,8 +64,8 @@ class InvalidJSON(SCAPIError):
 
     def __init__(self, name, e, data):
         self.message = f"""
-            {name} contiene JSON non valido:
-            {name} contains Invalid JSON data:
+            "{name}" contiene JSON non valido:
+            "{name}" contains Invalid JSON data:
             Data: {data}
             Error: {e}
             """
@@ -77,9 +77,21 @@ class PreviewError(SCAPIError):
 
     def __init__(self, name, e):
         self.message = f"""
-            Impossibile ottenere i dati per {name}
-            Unable to get preview data for {name}
+            Impossibile ottenere i dati per "{name}".
+            Unable to get preview data for "{name}".
             Error: {e}
+            """
+        super().__init__(self.message)
+        
+class KeyNotFoundOrNone(SCAPIError):
+    """Raised when dict key not found or None"""
+
+    def __init__(self, key, name):
+        self.message = f"""
+            Impossibile estrarre "{key}" da:
+                {name}
+            Unable to get "{key}" from:
+                {name}.
             """
         super().__init__(self.message)
 
@@ -173,15 +185,17 @@ class API:
         # Estrarre i risultati della ricerca
         # Extract the search results
         try:
-            search_results = document.json()["data"]
+            search_results = document.json().get("data")
             output_dict = {}
             for result in search_results:
+                if (result.get("id") is None or result.get("slug") is None or result.get("name") is None):
+                    raise KeyNotFoundOrNone("id or slug", result)
                 result["url"] = f"{self._url}/titles/{result['id']}-{result['slug']}"
                 output_dict[result["name"]] = result
         except Exception as e:
             raise InvalidJSON(query, e, document) from e
 
-        return output_dict  # [result for result in search_results]
+        return output_dict
 
     def preview(self, content_slug):
         """
@@ -197,7 +211,7 @@ class API:
             dict:
                 Un dizionario contenente informazioni minimali sull'elemento:
                 A dictionary containing detailed information about the item:
-                    {id, type, runtime, release_date, quality, plot, seasons_count, preview (only for movies), images, generes}.
+                    {id, type, runtime, release_date, quality, plot, seasons_count, preview (only for movies), images, genres}.
 
         Example:
         ```
@@ -255,21 +269,26 @@ class API:
 
         # Estrarre i vari dati
         # Extract the various data
+        if (not preview_data.get("type")):
+            raise KeyNotFoundOrNone("type", preview_data)
         media_type = "Movie" if preview_data["type"] == "movie" else "TvSeries"
 
-        images = preview_data["images"]
+        images = preview_data.get("images")
 
         year = preview_data["release_date"].split("-")[0] if preview_data["release_date"] else None
+        
+        if (data.get("props") is None or data["props"].get("title") is None):
+            raise KeyNotFoundOrNone("props or props.title", data)
 
         props = data["props"]
 
-        trailer_info = props["title"]["trailers"]
+        trailer_info = props["title"].get("trailers")
         trailer_url = (
             f"https://www.youtube.com/watch?v={trailer_info[0]['youtube_id']}"
-            if trailer_info
+            if trailer_info and trailer_info[0]["youtube_id"]
             else None
         )
-        if len(props["sliders"]) == 0:
+        if props.get("sliders") is None or len(props["sliders"]) == 0 or props["sliders"][0].get("titles") is None:
             correlates = []
         else:
             correlates = props["sliders"][0]["titles"]
@@ -277,30 +296,35 @@ class API:
         size = min(len(correlates), 15)
         correlates_list = correlates[:size]
 
-        plot = props["title"]["plot"]
+        plot = props["title"].get("plot")
 
-        score = props["title"]["score"]
+        score = props["title"].get("score")
 
-        tmdb_id = props["title"]["tmdb_id"]
-        imdb_id = props["title"]["imdb_id"]
-        netflix_id = props["title"]["netflix_id"]
-        prime_id = props["title"]["prime_id"]
-        disney_id = props["title"]["disney_id"]
-        release_date = props["title"]["release_date"]
-        sub_ita = props["title"]["sub_ita"]
+        tmdb_id = props["title"].get("tmdb_id")
+        imdb_id = props["title"].get("imdb_id")
+        netflix_id = props["title"].get("netflix_id")
+        prime_id = props["title"].get("prime_id")
+        disney_id = props["title"].get("disney_id")
+        release_date = props["title"].get("release_date")
+        sub_ita = bool(props["title"]["sub_ita"]) if props["title"].get("sub_ita") else None
 
         # Estrarre i dati degli episodi per le serie
         # Extract episode data for series.
         if media_type == "TvSeries":
 
+            if (props["title"].get("name") is None):
+                raise KeyNotFoundOrNone("name", props["title"])
+
             name = props["title"]["name"]
 
-            seasons = props["title"]["seasons"]
+            seasons = props["title"]["seasons"] if props["title"]["seasons"] else []
 
-            seasons_count = int(props["title"]["seasons_count"])
+            seasons_count = int(props["title"]["seasons_count"]) if props["title"]["seasons_count"] else None
 
             episode_list = []
             for se in seasons:
+                if (se.get("number") is None or se.get("title_id") is None):
+                    raise KeyNotFoundOrNone("number or title_id", se)
                 season = int(se["number"])
                 se_url = f"{url}/stagione-{season}"
                 try:
@@ -310,21 +334,24 @@ class API:
                     )
                 except requests.exceptions.Timeout as e:
                     raise WebPageTimeOutError(se_url) from e
-                episodes = se_data["props"]["loadedSeason"]["episodes"]
+                if (se_data.get("props") is None or se_data["props"].get("loadedSeason") is None):
+                    raise KeyNotFoundOrNone("props or props.loadedSeason", se_data)
+                episodes = se_data["props"]["loadedSeason"]["episodes"] if se_data["props"]["loadedSeason"].get("episodes") else []
                 sid = se["title_id"]
                 for ep in episodes:
-                    scws_id = ep["scws_id"]
+                    if (ep.get("id") is None):
+                        raise KeyNotFoundOrNone("id", ep)
                     href = f"{self._url}/watch/{sid}?e={ep['id']}"
 
                     episode = {
-                        "name": ep["name"],
+                        "name": ep.get("name"),
                         "season": season,
-                        "episode": int(ep["number"]),
-                        "description": ep["plot"],
-                        "duration": int(ep["duration"]) if ep["duration"] else None,
-                        "images": ep["images"],
+                        "episode": int(ep["number"]) if ep.get("number") else None,
+                        "description": ep.get("plot"),
+                        "duration": int(ep["duration"]) if ep.get("duration") else None,
+                        "images": ep.get("images"),
                         "url": href,
-                        "scws_id": scws_id,
+                        "scws_id": ep.get("scws_id"),
                     }
                     episode_list.append(episode)
 
@@ -345,18 +372,18 @@ class API:
                 "prime_id": prime_id,
                 "disney_id": disney_id,
                 "release_date": release_date,
-                "sub_ita": bool(sub_ita),
+                "sub_ita": sub_ita,
                 "rating": int(float(score) * 1000) if score else None,
                 "seasons_count": seasons_count,
-                "tags": [genre["name"] for genre in preview_data["genres"]],
+                "tags": [genre.get("name") for genre in preview_data["genres"]] if preview_data.get("genres") else None,
                 "trailerUrl": trailer_url,
                 "recommendations": correlates_list,
             }
 
         return {
-            "name": props["title"]["name"],
+            "name": props["title"].get("name"),
             "url": url,
-            "scws_id": props["title"]["scws_id"],
+            "scws_id": props["title"].get("scws_id"),
             "type": media_type,
             "images": images,
             "year": int("".join(filter(str.isdigit, year))) if year else None,
@@ -367,10 +394,10 @@ class API:
             "prime_id": prime_id,
             "disney_id": disney_id,
             "release_date": release_date,
-            "sub_ita": bool(sub_ita),
+            "sub_ita": sub_ita,
             "rating":  int(float(score) * 1000) if score else None,
-            "tags": [genre["name"] for genre in preview_data["genres"]],
-            "duration": int(props["title"]["runtime"]) if props["title"]["runtime"] else None,
+            "tags": [genre["name"] for genre in preview_data["genres"]] if preview_data.get("genres") else None,
+            "duration": int(props["title"]["runtime"]) if props["title"].get("runtime") else None,
             "trailerUrl": trailer_url,
             "recommendations": correlates_list,
         }
