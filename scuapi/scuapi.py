@@ -351,7 +351,7 @@ class API:
                         "duration": int(ep["duration"]) if ep.get("duration") else None,
                         "images": ep.get("images"),
                         "url": href,
-                        "scws_id": ep.get("scws_id"),
+                        "id": ep.get("id"),
                     }
                     episode_list.append(episode)
 
@@ -361,6 +361,7 @@ class API:
             return {
                 "name": name,
                 "url": url,
+                "id": props["title"].get("id"),
                 "type": media_type,
                 "episodeList": episode_list,
                 "images": images,
@@ -383,7 +384,7 @@ class API:
         return {
             "name": props["title"].get("name"),
             "url": url,
-            "scws_id": props["title"].get("scws_id"),
+            "id": props["title"].get("id"),
             "type": media_type,
             "images": images,
             "year": int("".join(filter(str.isdigit, year))) if year else None,

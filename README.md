@@ -1,12 +1,15 @@
 A simple unofficial api for the italian StreamingCommunity website.
 
-![Static Badge](https://img.shields.io/badge/version-2.1.0-green?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/23%2F03%2F2025-Working-green?style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/version-3.0.0-green?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/06%2F04%2F2025-Working-green?style=for-the-badge)
 
 [![PyPI](https://img.shields.io/pypi/v/streamingcommunity-unofficialapi?style=flat)](https://pypi.org/project/streamingcommunity-unofficialapi/)
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Blu-Tiger/streamingcommunity-unofficialapi?style=flat)
 ![PyPI - Downloads](https://img.shields.io/pypi/dd/streamingcommunity-unofficialapi?style=flat)
 ![PyPI - Downloads](https://img.shields.io/pypi/dw/streamingcommunity-unofficialapi?style=flat)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/streamingcommunity-unofficialapi?style=flat)
+
+> [!IMPORTANT]
+> After updating please check the changes in the output examples.
 
 # StreamingCommunity-API
 
@@ -195,137 +198,103 @@ sc = API('StreamingCommunity.esempio')
   <summary>Esempio Film: <a name="info-esempio-film" /></summary>
 
   ```
-  {
-      "name": "John Wick 4",
-      "url": "StreamingCommunity.esempio/titles/6203-john-wick-4",
-      "scws_id": 157670,
-      "type": "Movie",
-      "images": [
-          {
-              "id": 62111,
-              "filename": "8babb029-90b3-4237-aff2-2395b2dfb5ce.webp",
-              "type": "cover_mobile",
-              "imageable_type": "title",
-              "imageable_id": 6203,
-              "created_at": "2023-05-18T13:35:15.000000Z",
-              "updated_at": "2023-05-18T13:35:15.000000Z",
-              "original_url_field": None,
-          },
-          {
-              "id": 66322,
-              "filename": "64934c02-794f-4307-a860-758eed06b717.webp",
-              "type": "logo",
-              "imageable_type": "title",
-              "imageable_id": 6203,
-              "created_at": "2023-05-18T13:54:10.000000Z",
-              "updated_at": "2023-05-18T18:24:23.000000Z",
-              "original_url_field": None,
-          },
-          {
-              "id": 66600,
-              "filename": "6e08fcb2-59c4-4024-99f6-8b11843c7d86.webp",
-              "type": "background",
-              "imageable_type": "title",
-              "imageable_id": 6203,
-              "created_at": "2023-05-24T04:33:08.000000Z",
-              "updated_at": "2023-05-24T04:33:08.000000Z",
-              "original_url_field": None,
-          },
-          {
-              "id": 66601,
-              "filename": "91c3b096-4636-4cea-bdcf-80dc2740fe96.webp",
-              "type": "poster",
-              "imageable_type": "title",
-              "imageable_id": 6203,
-              "created_at": "2023-05-24T04:33:08.000000Z",
-              "updated_at": "2023-05-24T04:33:08.000000Z",
-              "original_url_field": None,
-          },
-          {
-              "id": 66602,
-              "filename": "3a9b0a6b-92f7-4c2d-94b8-8ecd5e5e48be.webp",
-              "type": "cover",
-              "imageable_type": "title",
-              "imageable_id": 6203,
-              "created_at": "2023-05-24T04:33:08.000000Z",
-              "updated_at": "2023-05-24T04:33:08.000000Z",
-              "original_url_field": None,
-          },
-          {
-              "id": 66603,
-              "filename": "3a3bae1a-b7a3-4bc2-afd1-eabe2d0f31ef.webp",
-              "type": "cover_mobile",
-              "imageable_type": "title",
-              "imageable_id": 6203,
-              "created_at": "2023-05-24T04:33:08.000000Z",
-              "updated_at": "2023-05-24T04:33:08.000000Z",
-              "original_url_field": None,
-          },
-      ],
-      "year": 2023,
-      "plot": "John Wick trova una via per sconfiggere la Gran Tavola. Ma prima di guadagnare la libertà, Wick deve affrontare un nuovo nemico che ha potenti alleanze in tutto il mondo e ha mezzi tali da tramutare vecchi amici in nuovi nemici.",
-      "tmdb_id": 603692,
-      "imdb_id": "tt10366206",
-      "netflix_id": None,
-      "prime_id": None,
-      "disney_id": None,
-      "release_date": "2023-03-22",
-      "sub_ita": False,
-      "rating": 8100,
-      "tags": ["Crime", "Azione", "Thriller"],
-      "duration": 169,
-      "trailerUrl": "https://www.youtube.com/watch?v=049RtZzgAtA",
-      "recommendations": [
-          {
-              "id": 10677,
-              "slug": "salt",
-              "name": "Salt",
-              "type": "movie",
-              "score": "6.9",
-              "sub_ita": 0,
-              "last_air_date": "2010-07-21",
-              "age": 12,
-              "seasons_count": 0,
-              "images": [
-                  {
-                      "imageable_id": 10677,
-                      "imageable_type": "title",
-                      "filename": "ba9fef9d-fa7e-4d86-876d-a2e9fdebe9eb.webp",
-                      "type": "poster",
-                      "original_url_field": None,
-                  },
-                  {
-                      "imageable_id": 10677,
-                      "imageable_type": "title",
-                      "filename": "b635c8c4-aa08-45a0-978e-4367894b87c5.webp",
-                      "type": "cover",
-                      "original_url_field": None,
-                  },
-                  {
-                      "imageable_id": 10677,
-                      "imageable_type": "title",
-                      "filename": "8abaf974-3d11-401b-9811-6a4b19403cf9.webp",
-                      "type": "cover_mobile",
-                      "original_url_field": None,
-                  },
-                  {
-                      "imageable_id": 10677,
-                      "imageable_type": "title",
-                      "filename": "88f700a3-c9c0-430d-8633-63fe5e0196c5.webp",
-                      "type": "background",
-                      "original_url_field": None,
-                  },
-                  {
-                      "imageable_id": 10677,
-                      "imageable_type": "title",
-                      "filename": "3db9bd79-5a6f-4459-ad79-0d884b7a177b.webp",
-                      "type": "logo",
-                      "original_url_field": None,
-                  },
-              ],
-          },
-      ],
-  }
+    {
+        "name": "John Wick",
+        "url": "https://streamingcommunity.esempio/titles/6-john-wick",
+        "id": 6,
+        "type": "Movie",
+        "images": [
+            {
+                "id": 216,
+                "filename": "f7887fba-d2d3-4252-b2e9-45129e1ecfd9.webp",
+                "type": "poster",
+                "imageable_type": "title",
+                "imageable_id": 6,
+                "created_at": "2023-05-18T11:48:50.000000Z",
+                "updated_at": "2023-05-18T14:16:51.000000Z",
+                "original_url_field": None,
+            },
+            {
+                "id": 217,
+                "filename": "3ca16987-4229-4369-ba0b-670e0ec2b4df.webp",
+                "type": "background",
+                "imageable_type": "title",
+                "imageable_id": 6,
+                "created_at": "2023-05-18T11:48:50.000000Z",
+                "updated_at": "2023-05-18T14:16:51.000000Z",
+                "original_url_field": None,
+            },
+        ],
+        "year": 2014,
+        "plot": "Dopo la morte dell'amata moglie, il leggendario ex assassino John Wick (Keanu Reeves) trascorre le giornate a rimettere in sesto la sua Ford Mustang del 1969 e con la sola compagnia del cane Daisy. La sua esistenza scivola via senza intoppi fino a quando un sadico delinquente di nome Yosef Tarasof nota la sua auto. Non accettando il rifiuto di venderla di Wick, Yosef manda due suoi complici a rubare la macchina e a uccidere brutalmente Daisy. Da quel momento, John si mette sulle tracce del criminale a New York, scoprendo di avere a che fare con l'unico figlio del boss della mala Viggo Tarasof. Quando in breve tempo per la città si diffonde la voce che John è in cerca di Yosef per vendicarsi, Viggo mette sulla sua testa una grande ricompensa, che attira tutti gli assassini in circolazione.",
+        "tmdb_id": 245891,
+        "imdb_id": "tt2911666",
+        "netflix_id": 80013762,
+        "prime_id": "0G58W0Q34J67V60W5XWF6BAVXM",
+        "disney_id": None,
+        "release_date": "2014-10-22",
+        "sub_ita": None,
+        "rating": 8000,
+        "tags": ["Azione", "Thriller"],
+        "duration": 136,
+        "trailerUrl": "https://www.youtube.com/watch?v=N_ZPL3hmFEo",
+        "recommendations": [
+            {
+                "id": 5981,
+                "slug": "invito-a-cena-con-delitto",
+                "name": "Invito a cena con delitto",
+                "type": "movie",
+                "score": "7.8",
+                "sub_ita": 0,
+                "last_air_date": "1976-06-23",
+                "age": None,
+                "seasons_count": 0,
+                "images": [
+                    {
+                        "imageable_id": 5981,
+                        "imageable_type": "title",
+                        "filename": "19aabbad-784e-480c-b5d1-97bd3266eea4.webp",
+                        "type": "poster",
+                        "original_url_field": None,
+                    },
+                    {
+                        "imageable_id": 5981,
+                        "imageable_type": "title",
+                        "filename": "85cd7753-4b33-4c73-ad42-f20689a67d69.webp",
+                        "type": "background",
+                        "original_url_field": None,
+                    },
+                ],
+            },
+            {
+                "id": 10916,
+                "slug": "absolution-storia-criminale",
+                "name": "ABSOLUTION - STORIA CRIMINALE",
+                "type": "movie",
+                "score": "6.2",
+                "sub_ita": 0,
+                "last_air_date": "2024-10-31",
+                "age": 18,
+                "seasons_count": 0,
+                "images": [
+                    {
+                        "imageable_id": 10916,
+                        "imageable_type": "title",
+                        "filename": "dde0111a-f0d9-4510-a85e-288e55059023.webp",
+                        "type": "cover",
+                        "original_url_field": None,
+                    },
+                    {
+                        "imageable_id": 10916,
+                        "imageable_type": "title",
+                        "filename": "f2c04f2f-a940-43d1-9f60-7b754ad82c79.webp",
+                        "type": "cover_mobile",
+                        "original_url_field": None,
+                    },
+                ],
+            },
+        ],
+    }
   ```
 
   </details>
@@ -334,296 +303,190 @@ sc = API('StreamingCommunity.esempio')
   <summary>Esempio Serie: <a name="info-esempio-serie" /></summary>
 
   ```
-  {
-      "name": "Hazbin Hotel",
-      "url": "https://StreamingCommunity.esempio/titles/7540-hazbin-hotel",
-      "type": "TvSeries",
-      "episodeList": [
-          {
-              "name": "Ouverture",
-              "season": 1,
-              "episode": 1,
-              "description": "Charlie presenta al Paradiso il suo piano per salvare i peccatori redimendoli nel suo hotel. Vaggie coinvolge lo staff nella realizzazione di uno spot per promuovere l'hotel.",
-              "duration": 25,
-              "images": [
-                  {
-                      "id": 88291,
-                      "filename": "6daa820e-0c15-48ad-a93d-1896e229e37a.webp",
-                      "type": "cover",
-                      "imageable_type": "episode",
-                      "imageable_id": 50635,
-                      "created_at": "2024-01-19T02:54:02.000000Z",
-                      "updated_at": "2024-01-19T02:54:02.000000Z",
-                      "original_url_field": None,
-                  }
-              ],
-              "url": "ParseResult(scheme='https', netloc='StreamingCommunity.esempio', path='', params='', query='', fragment='')/watch/7540?e=50635",
-              "scws_id": 187503,
-          },
-          {
-              "name": "La radio ha ucciso la televisione",
-              "season": 1,
-              "episode": 2,
-              "description": "I Vee: Vox, Velvette e Valentino governano il loro angolo dell'Inferno incontrastati, ma il ritorno di Alastor nell'etere potrebbe smuovere le cose. Nel frattempo, un nuovo ospite dell'hotel mette alla prova la pazienza di Angel.",
-              "duration": 25,
-              "images": [
-                  {
-                      "id": 88292,
-                      "filename": "4e714841-c4fc-447a-aac5-c5d70ed3cf0c.webp",
-                      "type": "cover",
-                      "imageable_type": "episode",
-                      "imageable_id": 50636,
-                      "created_at": "2024-01-19T02:54:03.000000Z",
-                      "updated_at": "2024-01-19T02:54:03.000000Z",
-                      "original_url_field": None,
-                  }
-              ],
-              "url": "ParseResult(scheme='https', netloc='StreamingCommunity.esempio', path='', params='', query='', fragment='')/watch/7540?e=50636",
-              "scws_id": 187504,
-          },
-          {
-              "name": "Uova strapazzate",
-              "season": 1,
-              "episode": 3,
-              "description": "Mentre gli ospiti ed il personale dell'Hotel trascorrono la giornata ad apprendere la fiducia, informazioni rivelate ad una riunione fra i signori supremi portano ad una lite irrispettosa.",
-              "duration": 24,
-              "images": [
-                  {
-                      "id": 88293,
-                      "filename": "96e2811d-9bb9-4d8c-bf4f-7d886283585d.webp",
-                      "type": "cover",
-                      "imageable_type": "episode",
-                      "imageable_id": 50637,
-                      "created_at": "2024-01-19T02:54:05.000000Z",
-                      "updated_at": "2024-01-19T02:54:05.000000Z",
-                      "original_url_field": None,
-                  }
-              ],
-              "url": "ParseResult(scheme='https', netloc='StreamingCommunity.esempio', path='', params='', query='', fragment='')/watch/7540?e=50637",
-              "scws_id": 187505,
-          },
-          {
-              "name": "Messinscena",
-              "season": 1,
-              "episode": 4,
-              "description": "Angel fatica a destreggiarsi tra il suo lavoro e il suo tempo all'hotel. Charlie decide che è ora di usare il suo status di Principessa con il capo di Angel.",
-              "duration": 24,
-              "images": [
-                  {
-                      "id": 88294,
-                      "filename": "d33f5488-b77e-4c8d-a59e-2319c811bbf3.webp",
-                      "type": "cover",
-                      "imageable_type": "episode",
-                      "imageable_id": 50638,
-                      "created_at": "2024-01-19T02:54:07.000000Z",
-                      "updated_at": "2024-01-19T02:54:07.000000Z",
-                      "original_url_field": None,
-                  }
-              ],
-              "url": "ParseResult(scheme='https', netloc='StreamingCommunity.esempio', path='', params='', query='', fragment='')/watch/7540?e=50638",
-              "scws_id": 187506,
-          },
-          {
-              "name": "Papà batte papà",
-              "season": 1,
-              "episode": 5,
-              "description": "Charlie è combattuta nel chiedere aiuto a suo padre, Lucifero. Nel frattempo, un nuovo arrivo inatteso movimenta le cose all'Hotel.",
-              "duration": 25,
-              "images": [
-                  {
-                      "id": 91383,
-                      "filename": "a360fcd5-b40a-4aef-be3d-7c2fa7da9bbd.webp",
-                      "type": "cover",
-                      "imageable_type": "episode",
-                      "imageable_id": 51656,
-                      "created_at": "2024-01-26T06:35:02.000000Z",
-                      "updated_at": "2024-01-26T06:35:02.000000Z",
-                      "original_url_field": None,
-                  }
-              ],
-              "url": "ParseResult(scheme='https', netloc='StreamingCommunity.esempio', path='', params='', query='', fragment='')/watch/7540?e=51656",
-              "scws_id": 192160,
-          },
-          {
-              "name": "Benvenute in Paradiso",
-              "season": 1,
-              "episode": 6,
-              "description": "Charlie e Vaggie riescono a raggiungere il Paradiso per parlare con il capo di Adamo. Nel frattempo, una rimpatriata esplosiva dà ad Angel l'opportunità di mostrare quanta strada ha fatto.",
-              "duration": 25,
-              "images": [
-                  {
-                      "id": 91384,
-                      "filename": "cfb5d01a-3e27-47c7-92e4-a335496d3957.webp",
-                      "type": "cover",
-                      "imageable_type": "episode",
-                      "imageable_id": 51657,
-                      "created_at": "2024-01-26T06:35:04.000000Z",
-                      "updated_at": "2024-01-26T06:35:04.000000Z",
-                      "original_url_field": None,
-                  }
-              ],
-              "url": "ParseResult(scheme='https', netloc='StreamingCommunity.esempio', path='', params='', query='', fragment='')/watch/7540?e=51657",
-              "scws_id": 192161,
-          },
-          {
-              "name": "Ciao Rosie!",
-              "season": 1,
-              "episode": 7,
-              "description": "Con i segreti rivelati e l'Hotel nel mirino, Charlie e Vaggie devono fare il possibile per proteggere la loro casa dalla distruzione con ogni mezzo necessario.",
-              "duration": 25,
-              "images": [
-                  {
-                      "id": 91924,
-                      "filename": "848da78a-954a-458c-8dcd-5f5fdb9a88cd.webp",
-                      "type": "cover",
-                      "imageable_type": "episode",
-                      "imageable_id": 51885,
-                      "created_at": "2024-02-02T12:21:05.000000Z",
-                      "updated_at": "2024-02-02T12:21:05.000000Z",
-                      "original_url_field": None,
-                  }
-              ],
-              "url": "ParseResult(scheme='https', netloc='StreamingCommunity.esempio', path='', params='', query='', fragment='')/watch/7540?e=51885",
-              "scws_id": 199946,
-          },
-          {
-              "name": "Lo spettacolo deve continuare",
-              "season": 1,
-              "episode": 8,
-              "description": "Nel finale di stagione, succede di tutto, mentre lo scontro tra le legioni del Paradiso e dell'Inferno ha inizio.",
-              "duration": 25,
-              "images": [
-                  {
-                      "id": 91923,
-                      "filename": "da8ea904-10ba-4312-b09b-32e78cf361c6.webp",
-                      "type": "cover",
-                      "imageable_type": "episode",
-                      "imageable_id": 51884,
-                      "created_at": "2024-02-02T12:21:02.000000Z",
-                      "updated_at": "2024-02-02T12:21:02.000000Z",
-                      "original_url_field": None,
-                  }
-              ],
-              "url": "ParseResult(scheme='https', netloc='StreamingCommunity.esempio', path='', params='', query='', fragment='')/watch/7540?e=51884",
-              "scws_id": 199947,
-          },
-      ],
-      "images": [
-          {
-              "id": 88287,
-              "filename": "cf42bff9-41dc-4710-be80-cbc91ac6686c.webp",
-              "type": "logo",
-              "imageable_type": "title",
-              "imageable_id": 7540,
-              "created_at": "2024-01-19T02:52:11.000000Z",
-              "updated_at": "2024-01-19T02:52:11.000000Z",
-              "original_url_field": None,
-          },
-          {
-              "id": 88288,
-              "filename": "d79bac25-35d5-4cae-9543-3f7380260ff8.webp",
-              "type": "cover_mobile",
-              "imageable_type": "title",
-              "imageable_id": 7540,
-              "created_at": "2024-01-19T02:53:52.000000Z",
-              "updated_at": "2024-01-19T02:53:52.000000Z",
-              "original_url_field": None,
-          },
-          {
-              "id": 88289,
-              "filename": "4ba17e65-c47b-41cb-833c-2fc5e640bad0.webp",
-              "type": "cover",
-              "imageable_type": "title",
-              "imageable_id": 7540,
-              "created_at": "2024-01-19T02:53:52.000000Z",
-              "updated_at": "2024-01-19T02:53:52.000000Z",
-              "original_url_field": None,
-          },
-          {
-              "id": 88290,
-              "filename": "ca6cbc7b-4d05-4d23-bc35-cef0aafd33b4.webp",
-              "type": "background",
-              "imageable_type": "title",
-              "imageable_id": 7540,
-              "created_at": "2024-01-19T02:53:52.000000Z",
-              "updated_at": "2024-01-19T02:53:52.000000Z",
-              "original_url_field": None,
-          },
-          {
-              "id": 89554,
-              "filename": "d06f117f-d3c6-43ef-9d9a-9d99543387ad.webp",
-              "type": "poster",
-              "imageable_type": "title",
-              "imageable_id": 7540,
-              "created_at": "2024-01-19T11:44:35.000000Z",
-              "updated_at": "2024-01-19T11:44:35.000000Z",
-              "original_url_field": None,
-          },
-      ],
-      "year": 2024,
-      "plot": "Charlie. Stella del Mattino, la Principessa dell'Inferno, fatica a convincere sia i demoni che gli angeli che ogni anima possa essere redenta. Cantate e imprecate con noi in questa commedia musicale animata per adulti sul tema delle seconde chance.",
-      "tmdb_id": 94954,
-      "imdb_id": "tt7216636",
-      "netflix_id": None,
-      "prime_id": "0HZWTBZYQQXYW48YBANMDM2MZE",
-      "disney_id": None,
-      "release_date": "2024-01-18",
-      "sub_ita": False,
-      "rating": 8700,
-      "seasons_count": 1,
-      "tags": ["Commedia", "Animazione"],
-      "trailerUrl": "https://www.youtube.com/watch?v=u-zpwEA7ceY",
-      "recommendations": [
-          {
-              "id": 8166,
-              "slug": "angel",
-              "name": "Angel",
-              "type": "tv",
-              "score": "8.3",
-              "sub_ita": 0,
-              "last_air_date": "1999-10-05",
-              "age": 13,
-              "seasons_count": 5,
-              "images": [
-                  {
-                      "imageable_id": 8166,
-                      "imageable_type": "title",
-                      "filename": "c836c83c-33ca-4ee7-83a0-3e0d5d1e6ead.webp",
-                      "type": "background",
-                      "original_url_field": None,
-                  },
-                  {
-                      "imageable_id": 8166,
-                      "imageable_type": "title",
-                      "filename": "13475346-adb4-4032-875a-954f3ff0498c.webp",
-                      "type": "logo",
-                      "original_url_field": None,
-                  },
-                  {
-                      "imageable_id": 8166,
-                      "imageable_type": "title",
-                      "filename": "333b626d-6e0c-42f2-b136-62108181d449.webp",
-                      "type": "poster",
-                      "original_url_field": None,
-                  },
-                  {
-                      "imageable_id": 8166,
-                      "imageable_type": "title",
-                      "filename": "eab1cf97-3d43-4fc3-b896-10bd0c275510.webp",
-                      "type": "cover",
-                      "original_url_field": None,
-                  },
-                  {
-                      "imageable_id": 8166,
-                      "imageable_type": "title",
-                      "filename": "33bda01b-ffdd-46bf-b623-f29501b5b307.webp",
-                      "type": "cover_mobile",
-                      "original_url_field": None,
-                  },
-              ],
-          },
-      ],
-  }
+    {
+        "name": "Scissione",
+        "url": "https://streamingcommunity.esempio/titles/4937-scissione",
+        "id": 4937,
+        "type": "TvSeries",
+        "episodeList": [
+            {
+                "name": "Buone notizie sull'inferno",
+                "season": 1,
+                "episode": 1,
+                "description": "Mark viene promosso a capo del team di impiegati la cui memoria è stata chirurgicamente scissa per dividere i ricordi della vita lavorativa da quelli della vita privata.",
+                "duration": 52,
+                "images": [
+                    {
+                        "id": 144908,
+                        "filename": "333170a8-9dfd-49d9-b5b2-565b97cb78c0.webp",
+                        "type": "cover",
+                        "imageable_type": "episode",
+                        "imageable_id": 30088,
+                        "created_at": "2024-12-12T16:44:40.000000Z",
+                        "updated_at": "2024-12-12T16:44:40.000000Z",
+                        "original_url_field": None,
+                    }
+                ],
+                "url": "ParseResult(scheme='https', netloc='streamingcommunity.esempio', path='', params='', query='', fragment='')/watch/4937?e=30088",
+                "id": 30088,
+            },
+            {
+                "name": "Half Loop",
+                "season": 1,
+                "episode": 2,
+                "description": "Il team forma la nuova assunta, Helly, sul lavoro di Macrodata Refinment. Mark si prende un giorno di pausa per incontrare un misterioso ex collega.",
+                "duration": 47,
+                "images": [
+                    {
+                        "id": 144909,
+                        "filename": "51a84c9f-8691-4069-b74e-8e04245291b8.webp",
+                        "type": "cover",
+                        "imageable_type": "episode",
+                        "imageable_id": 30089,
+                        "created_at": "2024-12-12T16:44:48.000000Z",
+                        "updated_at": "2024-12-12T16:44:48.000000Z",
+                        "original_url_field": None,
+                    }
+                ],
+                "url": "ParseResult(scheme='https', netloc='streamingcommunity.esempio', path='', params='', query='', fragment='')/watch/4937?e=30089",
+                "id": 30089,
+            },
+            {
+                "name": "Chi è vivo?",
+                "season": 2,
+                "episode": 3,
+                "description": "Mark, Helly, Irving e Dylan cercano risposte.",
+                "duration": 53,
+                "images": [
+                    {
+                        "id": 149514,
+                        "filename": "dd954958-6633-4221-97e9-3ec448758725.webp",
+                        "type": "cover",
+                        "imageable_type": "episode",
+                        "imageable_id": 84347,
+                        "created_at": "2025-01-31T02:10:31.000000Z",
+                        "updated_at": "2025-01-31T02:10:31.000000Z",
+                        "original_url_field": None,
+                    }
+                ],
+                "url": "ParseResult(scheme='https', netloc='streamingcommunity.esempio', path='', params='', query='', fragment='')/watch/4937?e=84347",
+                "id": 84347,
+            },
+            {
+                "name": "La Valle del Dolore",
+                "season": 2,
+                "episode": 4,
+                "description": "Il team partecipa a un'attività di gruppo.",
+                "duration": 50,
+                "images": [
+                    {
+                        "id": 150044,
+                        "filename": "01f322e9-2534-46bc-a55c-b29152298d82.webp",
+                        "type": "cover",
+                        "imageable_type": "episode",
+                        "imageable_id": 84509,
+                        "created_at": "2025-02-07T02:08:31.000000Z",
+                        "updated_at": "2025-02-07T02:08:31.000000Z",
+                        "original_url_field": None,
+                    }
+                ],
+                "url": "ParseResult(scheme='https', netloc='streamingcommunity.esempio', path='', params='', query='', fragment='')/watch/4937?e=84509",
+                "id": 84509,
+            },
+        ],
+        "images": [
+            {
+                "id": 155419,
+                "filename": "c0e66fa5-9d20-47cf-aee4-7a1a7eb3d9ce.webp",
+                "type": "cover",
+                "imageable_type": "title",
+                "imageable_id": 4937,
+                "created_at": "2025-03-13T18:37:16.000000Z",
+                "updated_at": "2025-03-13T18:37:16.000000Z",
+                "original_url_field": None,
+            },
+            {
+                "id": 155420,
+                "filename": "dd1fdc3e-bd17-4791-a8b0-57e16b30aadb.webp",
+                "type": "cover_mobile",
+                "imageable_type": "title",
+                "imageable_id": 4937,
+                "created_at": "2025-03-13T18:37:16.000000Z",
+                "updated_at": "2025-03-13T18:37:16.000000Z",
+                "original_url_field": None,
+            },
+        ],
+        "year": 2022,
+        "plot": "In questa serie vincitrice del premio Emmy diretta da Ben Stiller, Mark guida un team di impiegati la cui memoria è stata chirurgicamente scissa per dividere i ricordi della vita lavorativa da quelli della vita privata. Gli impiegati iniziano un viaggio alla scoperta della verità riguardo al loro lavoro e se stessi.",
+        "tmdb_id": 95396,
+        "imdb_id": "tt11280740",
+        "netflix_id": None,
+        "prime_id": None,
+        "disney_id": None,
+        "release_date": "2022-02-18",
+        "sub_ita": None,
+        "rating": 8700,
+        "seasons_count": 2,
+        "tags": ["Dramma", "Sci-Fi & Fantasy", "Mistero"],
+        "trailerUrl": "https://www.youtube.com/watch?v=gHUPGia32y4",
+        "recommendations": [
+            {
+                "id": 10623,
+                "slug": "the-madness",
+                "name": "The Madness",
+                "type": "tv",
+                "score": "6.9",
+                "sub_ita": 0,
+                "last_air_date": "2024-11-28",
+                "age": 16,
+                "seasons_count": 1,
+                "images": [
+                    {
+                        "imageable_id": 10623,
+                        "imageable_type": "title",
+                        "filename": "a002ecd7-4218-472c-b909-0f80c057b933.webp",
+                        "type": "logo",
+                        "original_url_field": None,
+                    },
+                    {
+                        "imageable_id": 10623,
+                        "imageable_type": "title",
+                        "filename": "d77b621a-6cc9-4c7c-9380-682cfb027b46.webp",
+                        "type": "background",
+                        "original_url_field": None,
+                    },
+                ],
+            },
+            {
+                "id": 5010,
+                "slug": "shining-girls",
+                "name": "Shining Girls",
+                "type": "tv",
+                "score": "7.6",
+                "sub_ita": 0,
+                "last_air_date": "2022-04-29",
+                "age": 12,
+                "seasons_count": 1,
+                "images": [
+                    {
+                        "imageable_id": 5010,
+                        "imageable_type": "title",
+                        "filename": "ee0b09c6-3fcc-4ae8-9aac-c1abe8b7b9b4.webp",
+                        "type": "poster",
+                        "original_url_field": None,
+                    },
+                    {
+                        "imageable_id": 5010,
+                        "imageable_type": "title",
+                        "filename": "ec20c1ca-8450-4c45-80ec-38e379d66a29.webp",
+                        "type": "background",
+                        "original_url_field": None,
+                    },
+                ],
+            },
+        ],
+    }
+
   ```
 
    </details>
@@ -637,9 +500,11 @@ sc = API('StreamingCommunity.esempio')
 
   # Film
   iframe, m3u_playlist_url = sc.get_links('7540')
+  iframe, m3u_playlist_url = sc.get_links(7540)
   iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links('7540', get_m3u=True)
   # Serie
   iframe, m3u_playlist_url = sc.get_links('7540', '50636')
+  iframe, m3u_playlist_url = sc.get_links(7540, 50636)
   iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links('7540', '50636', get_m3u=True)
   iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links('7540', episode_id='50636', get_m3u=True)
   ```
