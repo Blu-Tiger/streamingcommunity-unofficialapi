@@ -190,7 +190,7 @@ class API:
             for result in search_results:
                 if (result.get("id") is None or result.get("slug") is None or result.get("name") is None):
                     raise KeyNotFoundOrNone("id or slug", result)
-                result["url"] = f"{self._url}/titles/{result['id']}-{result['slug']}"
+                result["url"] = f"{self._url.geturl()}/titles/{result['id']}-{result['slug']}"
                 output_dict[result["name"]] = result
         except Exception as e:
             raise InvalidJSON(query, e, document) from e
@@ -341,7 +341,7 @@ class API:
                 for ep in episodes:
                     if (ep.get("id") is None):
                         raise KeyNotFoundOrNone("id", ep)
-                    href = f"{self._url}/watch/{sid}?e={ep['id']}"
+                    href = f"{self._url.geturl()}/watch/{sid}?e={ep['id']}"
 
                     episode = {
                         "name": ep.get("name"),
@@ -436,7 +436,8 @@ class API:
             "user-agent": self.user_agent,
         }
         
-        sc_iframe_url = f"{self._url.geturl()}/iframe/{content_id}{f"?episode_id={episode_id}" if episode_id else ""}"
+        episode_id_qs = f"?episode_id={episode_id}" if episode_id else ""
+        sc_iframe_url = f"{self._url.geturl()}/iframe/{content_id}{episode_id_qs}"
         
 
         # Extract the video page url
