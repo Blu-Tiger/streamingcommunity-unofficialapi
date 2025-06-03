@@ -1,6 +1,7 @@
 A simple unofficial api for the italian StreamingCommunity website.
 
-![Static Badge](https://img.shields.io/badge/version-3.0.1-green?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/06%2F04%2F2025-Working-green?style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/version-3.0.1-green?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/03%2F06%2F2025-To%20Be%20Tested-orange?style=for-the-badge
+)
 
 [![PyPI](https://img.shields.io/pypi/v/streamingcommunity-unofficialapi?style=flat)](https://pypi.org/project/streamingcommunity-unofficialapi/)
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Blu-Tiger/streamingcommunity-unofficialapi?style=flat)
