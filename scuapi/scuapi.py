@@ -190,7 +190,7 @@ class API:
             for result in search_results:
                 if (result.get("id") is None or result.get("slug") is None or result.get("name") is None):
                     raise KeyNotFoundOrNone("id or slug", result)
-                result["url"] = f"{self._url.geturl()}/titles/{result['id']}-{result['slug']}"
+                result["url"] = f"{self._url.geturl()}/it/titles/{result['id']}-{result['slug']}"
                 output_dict[result["name"]] = result
         except Exception as e:
             raise InvalidJSON(query, e, document) from e
@@ -254,7 +254,7 @@ class API:
         film_info = load('6203-movie-name')
         ```
         """
-        url = self._url.geturl() + "/titles/" + content_slug
+        url = self._url.geturl() + "/it/titles/" + content_slug
         try:
             # Ottenere la risposta dell'url dell'elemento
             # Get the response of the item's url
@@ -326,7 +326,7 @@ class API:
                 if (se.get("number") is None or se.get("title_id") is None):
                     raise KeyNotFoundOrNone("number or title_id", se)
                 season = int(se["number"])
-                se_url = f"{url}/stagione-{season}"
+                se_url = f"{url}/season-{season}"
                 try:
                     resp = self._wbpage_as_text(se_url)
                     se_data = json.loads(
@@ -341,7 +341,7 @@ class API:
                 for ep in episodes:
                     if (ep.get("id") is None):
                         raise KeyNotFoundOrNone("id", ep)
-                    href = f"{self._url.geturl()}/watch/{sid}?e={ep['id']}"
+                    href = f"{self._url.geturl()}/it/watch/{sid}?e={ep['id']}"
 
                     episode = {
                         "name": ep.get("name"),
@@ -437,7 +437,7 @@ class API:
         }
         
         episode_id_qs = f"?episode_id={episode_id}" if episode_id else ""
-        sc_iframe_url = f"{self._url.geturl()}/iframe/{content_id}{episode_id_qs}"
+        sc_iframe_url = f"{self._url.geturl()}/it/iframe/{content_id}{episode_id_qs}"
         
 
         # Extract the video page url
