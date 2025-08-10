@@ -11,6 +11,9 @@ A simple unofficial api for the italian StreamingCommunity website.
 
 > [!IMPORTANT]
 > After updating please check the changes in the output examples.
+>
+>  Breaking changes from version 3:
+> * get_links new method
 
 # StreamingCommunity-API
 
