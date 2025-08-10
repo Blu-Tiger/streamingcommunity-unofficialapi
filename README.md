@@ -1,6 +1,6 @@
 A simple unofficial api for the italian StreamingCommunity website.
 
-![Static Badge](https://img.shields.io/badge/version-3.1b-orange?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/03%2F06%2F2025-To%20Be%20Tested-orange?style=for-the-badge
+![Static Badge](https://img.shields.io/badge/version-4.0.0-orange?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/03%2F06%2F2025-To%20Be%20Tested-orange?style=for-the-badge
 )
 
 [![PyPI](https://img.shields.io/pypi/v/streamingcommunity-unofficialapi?style=flat)](https://pypi.org/project/streamingcommunity-unofficialapi/)
@@ -494,26 +494,28 @@ sc = API('StreamingCommunity.esempio')
 
 - ### Link Iframe (embed) e Playlist m3u8 <a name="getlinks" />
 
+> [!IMPORTANT]
+> Ora viene utilizzato l'id tmdb al posto del precendente e il numer di serie ed episodio al posto dell'id episodio.
+> È necessario inserire l'url vixsrc
+ 
   ```python
   from scuapi import API
 
   sc = API('StreamingCommunity.esempio')
 
   # Film
-  iframe, m3u_playlist_url = sc.get_links('7540')
-  iframe, m3u_playlist_url = sc.get_links(7540)
-  iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links('7540', get_m3u=True)
+  iframe, m3u_playlist_url = sc.get_links(603692) # tmdb_id
+  iframe, m3u_playlist_url = sc.get_links(603692)
+  iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links(603692, get_m3u=True)
   # Serie
-  iframe, m3u_playlist_url = sc.get_links('7540', '50636')
-  iframe, m3u_playlist_url = sc.get_links(7540, 50636)
-  iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links('7540', '50636', get_m3u=True)
-  iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links('7540', episode_id='50636', get_m3u=True)
+  iframe, m3u_playlist_url = sc.get_links(603692, (1,2)) # tmdb_id, (stagione, episodio)
+  iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links(603692, (1,2), get_m3u=True)
   ```
 
   #### Esempio Risultati Link
 
   ```
-  ('https://esempio.com/embed/187503?token=c250fa66452196905729239d0630fc28&title=Hazbin+Hotel&referer=1&expires=1712698824&description=S1%3AE1+Ouverture&nextEpisode=1&b=1',
+  ('https://vixsrc.esempio/movie/603692',
   'https://esempio.com/playlist/187503?token=_SZhU9hVpDBU1Eld1p8PGQ&token=_SZhU9hVpDBU1Eld1p8PGQ&token480p=fkHMJTm4hOTW1yxBenQ8Vw&token720p=D9AarDND8u2sypbB11ApCA&expires=1712698824')
   ```
 

@@ -403,19 +403,22 @@ class API:
             "recommendations": correlates_list,
         }
 
-    def get_links(self, content_id, episode_id=None, get_m3u=False):
+    def get_links(self, vixsrc_url, tmdb_id, tv=None, get_m3u=False):
         """
         Estrai la playlist m3u8
         Get the m3u8 playlist
 
         Args:
-            content_id (str | int):
-                L'ID dell'elemento.
-                The ID of the item.
+            vixsrc_url (str):
+                Url del server vixsrc
+                Url of vixsrc server
+            tmdb_id (int):
+                L'ID tmdb.
+                The tmdb ID.
 
-            episode_id (str | int | none):
-                L'ID dell'episodio se è una serie.
-                The ID of the episode if it's a series.
+            tv (tuple):
+                Una tupla contenente il numero di stagione e il numero dell'episodio.
+                A tuple containing the season number and episode number, if it's a series.
             get_m3u (bool):
                 Se si desidera direttamente il file m3u
                 If you want the m3u file
@@ -436,18 +439,9 @@ class API:
             "user-agent": self.user_agent,
         }
         
-        episode_id_qs = f"?episode_id={episode_id}" if episode_id else ""
-        sc_iframe_url = f"{self._url.geturl()}/it/iframe/{content_id}{episode_id_qs}"
+        vixsrc_iframe_url = f'https://{vixsrc_url}/{"tv" if tv else "movie"}/{tmdb_id}{"/" + str(tv[0]) + "/" + str(tv[1]) if tv else ""}'
         
-
-        # Extract the video page url
-        video_page_url = self._wbpage_as_text(sc_iframe_url)
-
-        # Get the iframe url and iframe page
-        iframe_url = self._html_regex(
-            r'<iframe[^>]+src\s*=\s*"([^"]+)', video_page_url, "iframe url"
-        )
-        iframe_page = self._wbpage_as_text(iframe_url)
+        iframe_page = self._wbpage_as_text(vixsrc_iframe_url)
 
         # Extract the playlist params and url from the page js
         playlist_params = json.loads(
@@ -461,17 +455,7 @@ class API:
                 ).replace("'", '"'),
             )
         )
-        streams = json.loads(
-            self._html_regex(
-                r"window\.streams[^=]+=[^[](\[.*\])",
-                iframe_page,
-                "playlist streams",
-            )
-        )
 
-        # playlist_url = next((sub for sub in streams if sub["active"] is True), None)[
-        #     "url"
-        # ]
         playlist_url = self._html_regex(
             r"window\.masterPlaylist[^<]+url:[^<]+\'([^<]+?)\'",
             iframe_page,
@@ -486,7 +470,6 @@ class API:
             )
             == "true"
         )
-        # video_info = json.loads(self._html_regex(r'window\.video[^{]+({[^<]+});',vixcloud_iframe, "video info")
 
         # Generate the polaylist url
         dl_url = (
@@ -514,6 +497,7 @@ class API:
             else:
                 raise WebPageStatusCodeError("m3u URL", m3u_response.status_code)
 
-            return sc_iframe_url, dl_url, m3u
+            return vixsrc_iframe_url, dl_url, m3u
         else:
-            return sc_iframe_url, dl_url
+            return vixsrc_iframe_url, dl_url
+
