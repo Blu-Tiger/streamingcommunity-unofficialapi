@@ -504,12 +504,12 @@ sc = API('StreamingCommunity.esempio')
   sc = API('StreamingCommunity.esempio')
 
   # Film
-  iframe, m3u_playlist_url = sc.get_links(603692) # tmdb_id
-  iframe, m3u_playlist_url = sc.get_links(603692)
-  iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links(603692, get_m3u=True)
+  iframe, m3u_playlist_url = sc.get_links("vixsrc.esempio", 603692) # tmdb_id
+  iframe, m3u_playlist_url = sc.get_links("vixsrc.esempio", 603692)
+  iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links("vixsrc.esempio", 603692, get_m3u=True)
   # Serie
-  iframe, m3u_playlist_url = sc.get_links(603692, (1,2)) # tmdb_id, (stagione, episodio)
-  iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links(603692, (1,2), get_m3u=True)
+  iframe, m3u_playlist_url = sc.get_links("vixsrc.esempio", 603692, (1,2)) # tmdb_id, (stagione, episodio)
+  iframe, m3u_playlist_url, m3u_playlist_file = sc.get_links("vixsrc.esempio", 603692, (1,2), get_m3u=True)
   ```
 
   #### Esempio Risultati Link
