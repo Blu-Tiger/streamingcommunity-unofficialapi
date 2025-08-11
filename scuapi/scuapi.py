@@ -375,6 +375,7 @@ class API:
                 "release_date": release_date,
                 "sub_ita": sub_ita,
                 "rating": int(float(score) * 1000) if score else None,
+                "seasons": seasons,
                 "seasons_count": seasons_count,
                 "tags": [genre.get("name") for genre in preview_data["genres"]] if preview_data.get("genres") else None,
                 "trailerUrl": trailer_url,
@@ -500,4 +501,3 @@ class API:
             return vixsrc_iframe_url, dl_url, m3u
         else:
             return vixsrc_iframe_url, dl_url
-
