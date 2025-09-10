@@ -458,7 +458,7 @@ class API:
         )
 
         playlist_url = self._html_regex(
-            r"window\.masterPlaylist[^<]+url:[^<]+\'([^<]+?)\'",
+            r"window\.masterPlaylist\s*=\s*\{[\s\S]*?url:\s*'([^']+)'",
             iframe_page,
             "playlist url",
         )
@@ -501,3 +501,4 @@ class API:
             return vixsrc_iframe_url, dl_url, m3u
         else:
             return vixsrc_iframe_url, dl_url
+
