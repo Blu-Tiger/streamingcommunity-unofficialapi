@@ -171,9 +171,9 @@ class API:
         ```
         """
 
-        headers = {"user-agent": self.user_agent}
+        headers = {"user-agent": self.user_agent, "accept": "application/json"}
         query_formatted = query.replace(" ", "%20")
-        url = f"{self._url.geturl()}/api/search?q={query_formatted}"
+        url = f"{self._url.geturl()}/it/search?q={query_formatted}"
 
         try:
             # Ottenere i risultati della ricerca
